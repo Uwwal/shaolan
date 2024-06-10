@@ -1,0 +1,12 @@
+# 忽略data/catchwum/data目录
+/data/catchwum/data/
+
+# 忽略venv目录
+/venv/
+
+# 忽略.idea目录
+/.idea/
+
+/data/catchwum/bg
+/data/catchwum/data
+/data/iupar/iupar_json

@@ -1,0 +1,115 @@
+from io import BytesIO
+
+from PIL import ImageDraw, Image, ImageFont
+
+from config.constant import font_path, wum_page_capacity
+from config.global_object import global_wum_dict
+from utils.image_utils import change_non_transparent_alpha, base64_to_message_segment
+from utils.wum_utils import get_rarity, get_rarity_name, get_rarity_color
+
+
+async def wums_to_image(wums, page_id, head_label_text_1="", head_label_text_2="", is_blind_box=False):
+    # start_time = time.time()
+    wum_list = [(wum_name, get_rarity(wum_name), v['num'], v['isProtected']) for wum_name, v in wums.items()]
+
+    wum_sorted_list = sorted(wum_list, key=lambda x: x[1], reverse=True)
+
+    wums_type_num = len(wum_sorted_list)
+
+    if not is_blind_box:
+        start_wum_index = (page_id - 1) * wum_page_capacity
+        if start_wum_index > wums_type_num:
+            page_id = 1
+            start_wum_index = 0
+        page_max = int(wums_type_num / wum_page_capacity) + (0 if wums_type_num % wum_page_capacity == 0 else 1)
+        head_label_text_1 += f"        <第{page_id}页, 共{page_max}页>"
+
+        end_wum_index = page_id * wum_page_capacity
+        wum_sorted_list = wum_sorted_list[start_wum_index:end_wum_index]
+
+        wums_type_num = len(wum_sorted_list)
+
+    max_row_num = 10
+    row_remainder = wums_type_num % max_row_num
+
+    row = max_row_num if wums_type_num >= max_row_num else row_remainder
+    col = int(wums_type_num / max_row_num) + (0 if row_remainder == 0 else 1)
+
+    col_weight = 650
+    row_height = 280
+
+    start_y = 190
+    start_x = 50
+
+    # head label start
+    image = Image.new("RGB", (start_x + col * col_weight + 50, start_y + row_height * row + 55), '#2c2b2b')
+    if col == 0:
+        image = Image.new("RGB", (1 * col_weight, start_y + row_height * row + 55), '#2c2b2b')
+
+    draw = ImageDraw.Draw(image)
+
+    head_label_font = ImageFont.truetype(font_path, 72)
+    coins_font = ImageFont.truetype(font_path, 30)
+
+    draw.text((50, 30), head_label_text_1, fill="white", font=head_label_font)
+    draw.text((50, 125), head_label_text_2, fill="white", font=coins_font)
+
+    row_font_50 = ImageFont.truetype(font_path, 50)
+    row_font_35 = ImageFont.truetype(font_path, 35)
+
+    # col start
+    for i in range(col):
+        # row start
+        for j in range(row):
+            index = i * max_row_num + j
+
+            if index == wums_type_num:
+                break
+
+            row_bg = Image.new("RGB", (col_weight, row_height), '#545353')
+            draw_row_bg = ImageDraw.Draw(row_bg)
+
+            wum_name, rarity, num, is_protected = wum_sorted_list[index]
+            wum = global_wum_dict[wum_name]
+
+            wum_img = Image.open(wum.buf)
+
+            resized_wum = wum_img.resize((250, 250))
+
+            row_bg.paste(resized_wum, (15, 15), resized_wum)
+
+            rotated_wum_img = resized_wum.rotate(30, expand=True)
+
+            wum_alpha = await change_non_transparent_alpha(rotated_wum_img, 0.6)
+
+            max_y = 342
+            if j == row - 1:
+                max_y = 260
+
+            wum_alpha = wum_alpha.crop((0, 0, 265, max_y))
+
+            row_bg.paste(wum_alpha, (385, 20), wum_alpha)
+
+            draw_row_bg.text((300, 15), wum_name, fill="white", font=row_font_50)
+
+            draw_row_bg.text((300, 85), "稀有度: " + get_rarity_name(rarity), fill=get_rarity_color(rarity),
+                             font=row_font_35)
+            draw_row_bg.text((300, 125), "x" + str(num), fill="white", font=row_font_35)
+
+            if is_protected:
+                draw_row_bg.text((300, 165), "收藏中", fill="#eabf15", font=row_font_35)
+
+            draw_row_bg.rounded_rectangle(
+                [(12, 12), (268, 268)], radius=15, outline='#2c2b2b', width=4
+            )
+
+            row_bg_x = i * col_weight + start_x
+            row_bg_y = start_y + row_height * j
+
+            image.paste(row_bg, (row_bg_x, row_bg_y))
+
+    buf = BytesIO()
+    image.save(buf, format='PNG')
+
+    # print("done", time.time() - start_time)
+    return await base64_to_message_segment(buf)
