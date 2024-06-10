@@ -12,7 +12,7 @@ async def help_match(msg, to_me):
         return t
 
     if to_me and msg[0].type == 'text':
-        text = msg[1].data['text'].strip()
+        text = msg[0].data['text'].strip()
 
         if text == 'help' or text == '帮助':
             return True

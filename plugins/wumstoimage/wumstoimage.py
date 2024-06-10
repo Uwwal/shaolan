@@ -1,3 +1,4 @@
+import time
 from io import BytesIO
 
 from PIL import ImageDraw, Image, ImageFont
@@ -9,7 +10,6 @@ from utils.wum_utils import get_rarity, get_rarity_name, get_rarity_color
 
 
 async def wums_to_image(wums, page_id, head_label_text_1="", head_label_text_2="", is_blind_box=False):
-    # start_time = time.time()
     wum_list = [(wum_name, get_rarity(wum_name), v['num'], v['isProtected']) for wum_name, v in wums.items()]
 
     wum_sorted_list = sorted(wum_list, key=lambda x: x[1], reverse=True)
@@ -48,6 +48,8 @@ async def wums_to_image(wums, page_id, head_label_text_1="", head_label_text_2="
 
     draw = ImageDraw.Draw(image)
 
+    draw.rectangle((start_x, start_y, start_x + col * col_weight, start_y + row_height * row), fill='#545353')
+
     head_label_font = ImageFont.truetype(font_path, 72)
     coins_font = ImageFont.truetype(font_path, 30)
 
@@ -60,14 +62,16 @@ async def wums_to_image(wums, page_id, head_label_text_1="", head_label_text_2="
     # col start
     for i in range(col):
         # row start
+
+        x_offset = start_x + i * col_weight
+
         for j in range(row):
+            y_offset = start_y + row_height * j
+
             index = i * max_row_num + j
 
             if index == wums_type_num:
                 break
-
-            row_bg = Image.new("RGB", (col_weight, row_height), '#545353')
-            draw_row_bg = ImageDraw.Draw(row_bg)
 
             wum_name, rarity, num, is_protected = wum_sorted_list[index]
             wum = global_wum_dict[wum_name]
@@ -76,7 +80,7 @@ async def wums_to_image(wums, page_id, head_label_text_1="", head_label_text_2="
 
             resized_wum = wum_img.resize((250, 250))
 
-            row_bg.paste(resized_wum, (15, 15), resized_wum)
+            image.paste(resized_wum, (x_offset + 15, y_offset + 15), resized_wum)
 
             rotated_wum_img = resized_wum.rotate(30, expand=True)
 
@@ -88,28 +92,24 @@ async def wums_to_image(wums, page_id, head_label_text_1="", head_label_text_2="
 
             wum_alpha = wum_alpha.crop((0, 0, 265, max_y))
 
-            row_bg.paste(wum_alpha, (385, 20), wum_alpha)
+            image.paste(wum_alpha, (x_offset + 385, y_offset + 20), wum_alpha)
 
-            draw_row_bg.text((300, 15), wum_name, fill="white", font=row_font_50)
+            draw.text((x_offset + 300, y_offset + 15), wum_name, fill="white", font=row_font_50)
 
-            draw_row_bg.text((300, 85), "稀有度: " + get_rarity_name(rarity), fill=get_rarity_color(rarity),
-                             font=row_font_35)
-            draw_row_bg.text((300, 125), "x" + str(num), fill="white", font=row_font_35)
+            draw.text((x_offset + 300, y_offset + 85), "稀有度: " + get_rarity_name(rarity),
+                      fill=get_rarity_color(rarity),
+                      font=row_font_35)
+            draw.text((x_offset + 300, y_offset + 125), "x" + str(num), fill="white", font=row_font_35)
 
             if is_protected:
-                draw_row_bg.text((300, 165), "收藏中", fill="#eabf15", font=row_font_35)
+                draw.text((x_offset + 300, y_offset + 165), "收藏中", fill="#eabf15", font=row_font_35)
 
-            draw_row_bg.rounded_rectangle(
-                [(12, 12), (268, 268)], radius=15, outline='#2c2b2b', width=4
+            draw.rounded_rectangle(
+                [(x_offset + 12, y_offset + 12), (x_offset + 268, y_offset + 268)], radius=15, outline='#2c2b2b',
+                width=4
             )
-
-            row_bg_x = i * col_weight + start_x
-            row_bg_y = start_y + row_height * j
-
-            image.paste(row_bg, (row_bg_x, row_bg_y))
 
     buf = BytesIO()
     image.save(buf, format='PNG')
 
-    # print("done", time.time() - start_time)
     return await base64_to_message_segment(buf)

@@ -2,7 +2,7 @@ from config.constant import max_wum_name_len, steal_strategy_string_list
 from config.global_object import global_wum_name_list
 from plugins.stealwum.stealwum import steal_wum, set_steal_unit, set_defend_unit, set_steal_strategy, steal_wum_history
 from utils.command_match import command_match
-from utils.string_utls import get_message_sender, get_event_command_text, get_user_id
+from utils.string_utls import get_message_sender, get_event_command_text, get_user_id, get_group_id
 
 command = "偷wum"
 command_strategy = "设置策略"
@@ -15,9 +15,8 @@ command_set_unit_list = ["设置行动队", "设置防卫队"]
 偷wum 历史查询: 看最近5次行动与5次防卫记录
 设置 [行动队|防卫队] {wum_name} {num}?:
     可以让最多五种wum加入到队伍,
-    wum和num交替填写, num可省略
+    wum和num交替填写, num为1时可省略
     使用_代替wum_name中的空格
-※注意: 因框架问题有概率艾特同一人无效(重复艾特不改变结果)
 """
 
 
@@ -82,10 +81,10 @@ async def steal_wum_set_steal_strategy_process_params(event):
     return await set_steal_strategy(qq_id, i)
 
 
-async def steal_wum_process_params(event, at_id):
+async def steal_wum_process_params(event, at_id, at_name):
     qq_id = get_user_id(event)
-    # name = get_message_sender(event)
-    return await steal_wum(qq_id, at_id)
+    name = get_message_sender(event)
+    return await steal_wum(qq_id, at_id, name, at_name)
 
 
 async def steal_wum_set_unit_process_params(event, index):

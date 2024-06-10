@@ -8,6 +8,7 @@ lemmn_qq = "3408183732"
 is_lemmn = True
 
 # cur_path = os.path.join(cur_path, "..")
+# print(cur_path)
 
 bot_qq = "1077230687"
 if is_lemmn:
@@ -23,6 +24,8 @@ superuser_list = ["3476365499", "3165862735"]
 
 # dir start
 wums_dir = os.path.join(cur_path, 'data', 'catchwum', 'wums')
+
+background_dir = os.path.join(cur_path, 'data', 'catchwum', 'bg')
 
 font_path = os.path.join(cur_path, 'fonts', 'msyh.ttc')
 
@@ -180,7 +183,7 @@ steal_strategy_string_list = ["注重稀有", "防卫破坏", "拿钱就跑"]
 steal_strategy_power_multiple_list = [0.7, 1.3, 0.9]
 steal_strategy_base_success_rate_list = [40, 70, 70]
 
-steal_strategy_max_gain_wum_list = [3, 4, 0]
+steal_strategy_max_gain_wum_list = [2, 3, 0]
 
 steal_wum_trophy_weight_list = [10, 20, 30, 50, 70, 100]
 

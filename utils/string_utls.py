@@ -1,6 +1,7 @@
 import re
 
-dangerous_words = ["毛主席","主席", "共青团中央", "中央", "习近平", "xi近平", "平近习", "xjp", "习太子", "习明泽", "老习", "温家宝", "温加宝", "温x",
+dangerous_words = ["毛主席", "主席", "共青团中央", "中央", "习近平", "xi近平", "平近习", "xjp", "习太子", "习明泽",
+                   "老习", "温家宝", "温加宝", "温x",
                    "温jia宝", "温宝宝", "温加饱", "温加保", "张培莉", "温云松", "温如春", "温jb", "胡温", "胡x", "胡jt",
                    "胡boss", "胡总", "胡王八", "hujintao", "胡jintao", "胡j涛", "胡惊涛", "胡景涛", "胡紧掏", "湖紧掏",
                    "胡紧套", "锦涛", "hjt", "胡派", "胡主席", "刘永清", "胡海峰", "胡海清", "江泽民", "民泽江", "江胡",
@@ -53,8 +54,10 @@ def check_standard_word(input_str: str):
 def get_user_id(event):
     return str(event.user_id)
 
+
 def get_group_id(event):
     return str(event.group_id)
+
 
 def get_message_sender(event):
     return event.sender.nickname if not event.sender.card else event.sender.card

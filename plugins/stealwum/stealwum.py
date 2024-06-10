@@ -2,13 +2,16 @@ import datetime
 import random
 
 from config.constant import base_defend_power, steal_strategy_base_success_rate_list, steal_strategy_max_gain_wum_list, \
-    base_steal_power, steal_wum_trophy_weight_list
+    base_steal_power, steal_wum_trophy_weight_list, steal_strategy_string_list
 from models.wum_pool import wum_pool
+from plugins.stealwum.historytoimage import history_to_image
 from utils.wum_steal_utils import insert_steal_wum_new_record
 from utils.wum_utils import get_rarity
 
 
-async def steal_wum(qq_id, at_id):
+async def steal_wum(qq_id, at_id, qq_name, at_name):
+    print("steal start", qq_id, at_id, qq_name, at_name)
+
     user_inventory = wum_pool.get_inventory(qq_id)
 
     if isinstance(user_inventory, str):
@@ -149,14 +152,26 @@ async def steal_wum(qq_id, at_id):
         unit = user_inventory.data['steal_unit']
 
         if rate < - 80:
-            wum_name = random.choice(list(unit.keys()))
+            key_list = list(unit.keys())
 
-            lose_wum_list.append((wum_name, unit[wum_name]))
+            if len(key_list) >= 3:
+                wum_name_list = random.sample(key_list, 3)
+            else:
+                wum_name_list = key_list
+
+            for wum_name in wum_name_list:
+                lose_wum_list.append((wum_name, 1 + unit[wum_name] // 4))
 
         elif rate < - 40:
-            wum_name = random.choice(list(unit.keys()))
+            key_list = list(unit.keys())
 
-            lose_wum_list.append((wum_name, 1 + unit[wum_name] // 2))
+            if len(key_list) >= 2:
+                wum_name_list = random.sample(key_list, 2)
+            else:
+                wum_name_list = key_list
+
+            for wum_name in wum_name_list:
+                lose_wum_list.append((wum_name, 1 + unit[wum_name] // 4))
         elif rate < 0:
             wum_name = random.choice(list(unit.keys()))
 
@@ -185,7 +200,9 @@ async def steal_wum(qq_id, at_id):
 
     record = {"content": {
         "qq_id": qq_id,
+        "qq_name": qq_name,
         "at_id": at_id,
+        "at_name": at_name,
         "success": success,
         "steal_strategy": steal_strategy,
         "trophy": trophy,
@@ -194,8 +211,8 @@ async def steal_wum(qq_id, at_id):
 
     r_id = await insert_steal_wum_new_record(record)
 
-    await user_inventory.insert_steal_history(0, r_id, save=False)
-    await at_inventory.insert_steal_history(1, r_id, save=False)
+    await user_inventory.insert_steal_history(0, r_id, qq_id, at_id, save=False)
+    await at_inventory.insert_steal_history(1, r_id, qq_id, at_id, save=False)
 
     await user_inventory.clear_last_steal_catchwum_count(save=False)
     await at_inventory.add_steal_new_count(save=False)
@@ -293,20 +310,58 @@ async def steal_wum_history(qq_id, name):
     steal = history[0]
     defend = history[1]
 
-    r = f"{name}的行动历史:\n"
-    for i in steal:
-        is_success = i['content']['success']
-        r += f"{i['content']['qq_id']} vs {i['content']['at_id']}, {'你赢了!' if is_success else '你输了!'}\n"
-        r += f"{'战利品' if is_success else '损失wum'}: {i['content']['trophy']}\n"
-        r += f"时间: {i['content']['time'] if 'time' in i['content'] else '我忘了'}\n"
-
-    r += f"\n{name}的防御历史:\n"
-    for i in defend:
-        is_success = i['content']['success']
-        r += f"{i['content']['at_id']} vs {i['content']['qq_id']}, {'你输了!' if is_success else '你赢了!'}\n"
-        r += f"{'损失' if is_success else '缴获wum'}: {i['content']['trophy']}\n"
-        r += f"时间: {i['content']['time'] if 'time' in i['content'] else '我忘了'}\n"
-
     wum_pool.release_inventory(qq_id)
 
-    return r
+    solve_res = [[], []]
+
+    i = 0
+    while True:
+        if i == len(steal):
+            break
+
+        if steal[i]['content']['qq_id'] != qq_id:
+            steal.pop(i)
+            continue
+
+        is_success = steal[i]['content']['success']
+        solve_res[0].append({
+            'qq_name': name,
+            'other_name': steal[i]['content']['at_name'] if 'at_name' in steal[i]['content'] else '神必人',
+            'other_qq': steal[i]['content']['at_id'],
+            'is_success_hint': '你赢了!' if is_success else '你输了!',
+            'is_success_user': is_success,
+            'trophy_hint': '战利品:' if is_success else '损失wum:',
+            'trophy': steal[i]['content']['trophy'],
+            'strategy': steal_strategy_string_list[steal[i]['content']['steal_strategy']],
+            'time_hint': '时间:',
+            'time': steal[i]['content']['time'] if 'time' in steal[i]['content'] else '我忘了'
+        })
+
+        i += 1
+
+    i = 0
+    while True:
+        if i == len(defend):
+            break
+
+        if defend[i]['content']['at_id'] != qq_id:
+            defend.pop(i)
+            continue
+
+        is_success = defend[i]['content']['success']
+        solve_res[1].append({
+            'qq_name': name,
+            'other_name': defend[i]['content']['qq_name'] if 'qq_name' in defend[i]['content'] else '神必人',
+            'other_qq': defend[i]['content']['qq_id'],
+            'is_success_hint': '你输了!' if is_success else '你赢了!',
+            'is_success_user': not is_success,
+            'trophy_hint': '损失:' if is_success else '缴获wum:',
+            'trophy': defend[i]['content']['trophy'],
+            'strategy': steal_strategy_string_list[defend[i]['content']['steal_strategy']],
+            'time_hint': '时间:',
+            'time': defend[i]['content']['time'] if 'time' in defend[i]['content'] else '我忘了'
+        })
+
+        i += 1
+
+    return await history_to_image(solve_res, name)

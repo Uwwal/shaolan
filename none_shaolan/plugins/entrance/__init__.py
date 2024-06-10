@@ -1,7 +1,7 @@
 import random
 
 from nonebot import on_message
-from nonebot.adapters.onebot.v11 import MessageEvent
+from nonebot.adapters.onebot.v11 import MessageEvent, Bot, ActionFailed
 
 from config.constant import ignore_list, learn_word_channel_list, iupar_channel_list, superuser_list, \
     ignore_channel_list, is_lemmn
@@ -35,7 +35,7 @@ message_receive = on_message()
 
 
 @message_receive.handle()
-async def handle_function(event: MessageEvent):
+async def handle_function(event: MessageEvent, bot: Bot):
     triggered = False
 
     if event.anonymous is None and event.user_id and get_user_id(event) in superuser_list and get_group_id(event):
@@ -69,6 +69,12 @@ async def handle_function(event: MessageEvent):
 
         channel = get_group_id(event)
         qq_id = get_user_id(event)
+
+        at_name = "ERROR!"
+        if len(msg) > 1 and msg[1].type == 'at':
+            at_id = msg[1].data['qq']
+            at_user = await bot.get_group_member_info(group_id=int(channel), user_id=at_id)
+            at_name = at_user['card'] if at_user['card'] else at_user['nickname']
 
         r = random.randint(0, 100)
 
@@ -117,7 +123,7 @@ async def handle_function(event: MessageEvent):
             if t[1] == -1:
                 await message_receive.finish(await steal_wum_history_process_params(event))
             else:
-                await message_receive.finish(await steal_wum_process_params(event, t[1]))
+                await message_receive.finish(await steal_wum_process_params(event, t[1], at_name))
         elif not isinstance(t := await steal_wum_set_unit_match(msg), bool):
             print("B:", msg, t)
             await message_receive.finish(await steal_wum_set_unit_process_params(event, t))
@@ -132,7 +138,7 @@ async def handle_function(event: MessageEvent):
         else:
             if get_user_id(event) != "3465450433" and channel in learn_word_channel_list and not triggered:
                 await process_raw_message(msg)
-            if r in range(0, 100) and get_user_id(event) != "3465450433":
+            if r in range(75, 90) and get_user_id(event) != "3465450433":
                 if channel in iupar_channel_list and not triggered:
                     send_message = await iupar_message(msg)
                     if send_message is not None:
@@ -142,7 +148,7 @@ async def handle_function(event: MessageEvent):
             elif r in range(90, 100):
                 if await check_channel_and_id(channel, qq_id):
                     for i in msg:
-                        if i.type == 'img':
+                        if i.type == 'image':
                             res = await on_image_receive_wangchang(i)
                             if res is not None and not isinstance(res, str):
                                 await message_receive.finish(res)

@@ -6,14 +6,12 @@ from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 
 
-from config.constant import font_path
+from config.constant import font_path, background_dir
 from config.global_object import message_counter, global_wum_dict
 from models.wum_pool import wum_pool, system_inventory
 from utils.draw_utils import create_round_corner_mask
 from utils.image_utils import download_image, change_non_transparent_alpha, base64_to_message_segment
 from utils.wum_utils import get_rarity, get_rarity_color, get_rarity_name
-
-background_dir = './data/catchwum/bg'
 
 wum_target_size = (40, 40)
 

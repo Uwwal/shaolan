@@ -36,6 +36,7 @@ class WumInventory:
         if result is None:
             default_data = {}
             for i in default_attribute_list:
+
                 default_data.update({i[0]: i[1]})
             return default_data
 
@@ -119,7 +120,11 @@ class WumInventory:
         if save:
             self.save()
 
-    async def insert_steal_history(self, index, r_id, save=True):
+    async def insert_steal_history(self, index, r_id, qq_id, at_id, save=True):
+        if self.qq_id != qq_id and self.qq_id != at_id:
+            print(f"插入{index} {r_id} 到{self.qq_id}")
+            return None
+
         # 0 steal 1 defend
         self.data["steal_history_list"][index].append(r_id)
 
@@ -131,9 +136,9 @@ class WumInventory:
 
     async def query_steal_history(self):
         r = []
-        for l in self.data["steal_history_list"]:
+        for history_list in self.data["steal_history_list"]:
             t = []
-            for i in l:
+            for i in history_list:
                 t.append(await query_steal_wum_record(i))
             r.append(t)
         return r
