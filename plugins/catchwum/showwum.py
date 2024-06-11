@@ -23,7 +23,7 @@ async def show_qq_id_wum(qq_id, name, page_id=1):
     wums = wum_inventory.data["wums"]
 
     head_label_text_1 = name + "的wum统计"
-    head_label_text_2 = f"wum币余额: {wum_inventory.data['coins']}"
+    head_label_text_2 = f"wum币余额: {wum_inventory.data['coins']}      异化点: {wum_inventory.data['odd_point']}"
 
     return await wums_to_image(wums, page_id, head_label_text_1, head_label_text_2)
 

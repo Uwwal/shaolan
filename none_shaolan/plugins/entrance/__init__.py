@@ -18,6 +18,7 @@ from plugins.help import help_process_params, help_match
 from plugins.iupar import iupar_message, iupar_delete_match, iupar_delete_word, process_raw_message, iupar_match, \
     add_channel_iupar, iupar_add_channel_match, iupar_remove_channel_match, remove_channel_iupar
 from plugins.lemmndebug import lemmn_debug_add_wum_match, debug_add_wum
+from plugins.makeoddwum import make_odd_wum_match, make_odd_wum_process_params
 from plugins.personalinfo import personal_info_command_match, personal_info_process_params
 from plugins.ping import ping, ping_match
 from plugins.protectwum import protect_wum_match, protect_cancel_wum_match, protect_wum_process_params, \
@@ -112,6 +113,8 @@ async def handle_function(event: MessageEvent, bot: Bot):
             await message_receive.finish(await ping())
         elif await update_match(msg):
             await message_receive.finish(await update_info())
+        elif await make_odd_wum_match(msg):
+            await message_receive.finish(await make_odd_wum_process_params(event))
         elif await protect_wum_match(msg):
             await message_receive.finish(await protect_wum_process_params(event))
         elif await protect_cancel_wum_match(msg):

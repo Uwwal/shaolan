@@ -5,7 +5,7 @@ import os
 cur_path = os.getcwd()
 
 lemmn_qq = "3408183732"
-is_lemmn = True
+is_lemmn = False
 
 # cur_path = os.path.join(cur_path, "..")
 # print(cur_path)
@@ -64,9 +64,11 @@ dian_rarity = 6
 system_catch_wum_p = [0, 0, 0, 0, 0, 100]
 user_catch_wum_p = [50, 30, 15, 5, 0, 0]
 
+catch_wum_odd_point = [20, 10, 5, 0, 0, 0]
+
 recycle_coin_list = [0.2, 0.6, 1.2, 2.0]
 
-keep_wum_rarity_num = [20, 30, 60, 50, 999, 999]
+keep_wum_rarity_num = [20, 30, 60, 50, 0, 999]
 
 wum_page_capacity = 40
 
@@ -159,6 +161,12 @@ wums_rarity_dict = {
     "巨大wum": 2,  # odd
     "pou": 2,  # odd
     "mope wum": 3,  # colorful
+    "无责任wum": 5,  # yi
+    "热异常wum": 5,  # yi
+    "情绪wum": 5,  # yi
+    "low-poly wum": 4,  # colorful odd
+    "taffy wum": 4,  # colorful odd
+    "wumiku": 4,  # colorful odd
 }
 
 max_wum_name_len = 0
@@ -187,9 +195,24 @@ steal_strategy_max_gain_wum_list = [2, 3, 0]
 
 steal_wum_trophy_weight_list = [10, 20, 30, 50, 70, 100]
 
+# make odd start
+
+make_odd_dict = {
+    "脸wum": [("无责任wum", 5)],
+    "暗影wum": [("无责任wum", 4), ("热异常wum", 3)],
+    "无wum": [("无责任wum", 5)],
+    "无面wum": [("无责任wum", 5)],
+    "圣诞wum": [("热异常wum", 5)],
+    "wum什戴尔": [("热异常wum", 5)],
+    "puzzle wum": [("热异常wum", 2), ("情绪wum", 5)],
+    "mope wum": [("情绪wum", 5)],
+    "wum守": [("情绪wum", 5)],
+    "wum": ["ERROR", -1]
+}
+
 # help start
 
-help_command_param_list = ["偷wum"]
+help_command_param_list = ["偷wum", "异化wum"]
 help_docs_dict = {
     "偷wum": [
         "偷wum相关: \n"
@@ -207,5 +230,18 @@ help_docs_dict = {
         "当然你也可以反击那些偷你的坏家伙，也是一种不错的防卫呢(笑)\n"
         "主要机制就这些，具体数值我也不懂，顺从本心就好\n"
         "预祝行动顺利"
+    ],
+    "异化wum": [
+        "异化wum相关: \n"
+        "早上好，正常wum除外\n"
+        "如你所见，我是Doctor.奇异wum\n"
+        "在这个世界，没有什么是普通的。一切wum都有奇异的*潜力*\n"
+        "比如我昨天打扫房间的时候，我边上的吸尘器wum居然开始唱歌了\n"
+        "是的是的，孩子，这就是我们的奇异\n"
+        "想要让wum异化，你需要在捕捉wum的时候顺便收集异化点\n"
+        "把异化点和10个wum送给我，我自有方法呀\n"
+        "哈哈世界开始搞笑了\n"
+        "笑自己无知\n"
+        "(你注意到一个纸条: ▇▇▇▇ 适格▇▇m才▇▇异化 失▇▇失▇▇▇▇败)"
     ]
 }

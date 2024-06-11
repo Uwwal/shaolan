@@ -1,4 +1,4 @@
-from config.constant import bot_qq, help_command_param_list, help_docs_dict
+from config.constant import help_command_param_list, help_docs_dict
 from plugins.help.help import docs_help
 from utils.command_match import command_match
 from utils.string_utls import get_event_command_text
@@ -30,4 +30,4 @@ async def help_process_params(event):
     if args in help_command_param_list:
         return await docs_help(args + "详细帮助", help_docs_dict[args])
 
-    return await docs_help()
+    return "问题太猪，不予回答"

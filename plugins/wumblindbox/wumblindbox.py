@@ -5,7 +5,7 @@ from config.global_object import wum_rarity_dict_list
 from models.wum_pool import wum_pool, system_inventory
 from plugins.calculateprice.calculate_price import calculate_price
 from plugins.wumstoimage.wumstoimage import wums_to_image
-from utils.wum_utils import get_rarity, get_wum_rarity_weight
+from utils.wum_utils import get_rarity, get_wum_rarity_weight, wum_dict_standard
 
 price_list = [5, 10]
 delta_value_list = [lambda: random.uniform(-2.2, 0.1), lambda: random.uniform(-10, 7)]
@@ -99,12 +99,7 @@ async def wum_blind_box(qq_id, name, type_index):
         blind_box_name_prefix = "大"
 
     head_label_text_1 = name + "的" + blind_box_name_prefix + "盲盒"
-    head_label_text_2 = f"wum币余额: {wum_inventory.data['coins']}"
+    head_label_text_2 = f"wum币余额: {wum_inventory.data['coins']}      异化点: {wum_inventory.data['odd_point']}"
 
     return await wums_to_image(await wum_dict_standard(wum_dict), 0, head_label_text_1, head_label_text_2, True)
 
-
-async def wum_dict_standard(wum_dict):
-    for k, v in wum_dict.items():
-        wum_dict[k] = {'num': v, 'isProtected': False}
-    return wum_dict

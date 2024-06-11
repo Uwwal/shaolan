@@ -117,7 +117,7 @@ async def history_to_image(solve_res, name):
                     resized_wum = wum_img.resize((side, side))
 
                     wum_image_draw_x = x_offset + (
-                            col_weight - side * len_wum_tuple - wum_image_margin * (len_wum_tuple - 1)) // 2
+                            col_weight - side * len_wum_tuple - wum_image_margin * (len_wum_tuple - 1)) // 2 + draw_wum_cur_time * (side + wum_image_margin)
                     wum_image_draw_y = y_offset + 100
 
                     image.paste(resized_wum, (wum_image_draw_x, wum_image_draw_y), resized_wum)

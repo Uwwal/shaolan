@@ -37,9 +37,13 @@ def get_rarity_color(rarity):
     elif rarity == 4:
         return "#fc81c9"
     elif rarity == 5:
-        return "#232323"
+        return "#fba834"
     elif rarity == 6:
         return "#ff9696"
 
+async def wum_dict_standard(wum_dict):
+    for k, v in wum_dict.items():
+        wum_dict[k] = {'num': v, 'isProtected': False}
+    return wum_dict
 
 rarity_name_list = [get_rarity_name(f) for f in range(1, wum_rarity_num + 1)]

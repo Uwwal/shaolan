@@ -3,7 +3,7 @@ from io import BytesIO
 
 from PIL import Image, ImageDraw, ImageFont
 
-from config.constant import recycle_sum_coin, matong_gif_path, font_path, keep_wum_rarity_num
+from config.constant import recycle_sum_coin, matong_gif_path, font_path, keep_wum_rarity_num, yi_rarity
 from config.global_object import global_wum_dict
 from models.wum_pool import wum_pool, system_inventory
 from plugins.calculateprice.calculate_price import calculate_price
@@ -57,7 +57,9 @@ async def recycle_wum(qq_id, name, wum_name, num):
         coin = calculate_price(rarity, rarity_weight, recycle_sum_coin)
         gain_coins += coin
 
-        if wum_name in system_inventory.data["wums"] and system_inventory.data["wums"][wum_name]["num"] >= \
+        if rarity == yi_rarity:
+            system_gain_coins += coin
+        elif wum_name in system_inventory.data["wums"] and system_inventory.data["wums"][wum_name]["num"] >= \
                 keep_wum_rarity_num[rarity - 1]:
             system_gain_coins += coin
         else:
@@ -118,7 +120,9 @@ async def recycle_wum_rarity(qq_id, name, rarity):
             coin = calculate_price(rarity, rarity_weight, recycle_sum_coin)
             gain_coins += coin
 
-            if wum_name in system_inventory.data["wums"] and system_inventory.data["wums"][wum_name]["num"] >= \
+            if rarity == yi_rarity:
+                system_gain_coins += coin
+            elif wum_name in system_inventory.data["wums"] and system_inventory.data["wums"][wum_name]["num"] >= \
                     keep_wum_rarity_num[wum_rarity - 1]:
                 system_gain_coins += coin
             else:
@@ -191,7 +195,9 @@ async def recycle_wum_num(qq_id, name, command_type, command_num):
             coin = calculate_price(wum_rarity, rarity_weight, recycle_sum_coin)
             gain_coins += coin
 
-            if wum_name in system_inventory.data["wums"] and system_inventory.data["wums"][wum_name]["num"] >= \
+            if wum_rarity == yi_rarity:
+                system_gain_coins += coin
+            elif wum_name in system_inventory.data["wums"] and system_inventory.data["wums"][wum_name]["num"] >= \
                     keep_wum_rarity_num[wum_rarity - 1]:
                 system_gain_coins += coin
             else:

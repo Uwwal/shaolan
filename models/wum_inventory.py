@@ -4,7 +4,7 @@ import json
 
 from config.constant import wum_rarity_num, base_steal_power, \
     wum_steal_power_list, base_defend_power, base_complexly_multiple, wum_type_complexly_effect_list, \
-    wum_defend_power_list, steal_strategy_power_multiple_list, max_defend_power, max_steal_power
+    wum_defend_power_list, steal_strategy_power_multiple_list, max_defend_power, max_steal_power, catch_wum_odd_point
 from config.global_object import catchwum_collection, wum_rarity_dict_list
 from utils.wum_steal_utils import query_steal_wum_record
 from utils.wum_utils import get_rarity, get_wum_rarity_weight
@@ -20,6 +20,7 @@ default_attribute_list = [
     ("steal_strategy", 0),
     ("steal_history_list", [[], []]),
     ("steal_new_count", 0),
+    ("odd_point", 0),
 ]
 
 
@@ -219,6 +220,9 @@ class WumInventory:
         self.data["last_time"] = int(now.timestamp())
         self.add_wum(new_wum.name, num, save)
 
+        if not system:
+            self.add_odd_point(new_wum.name, save)
+
         return True, new_wum, num
 
     def random_wum(self, system=False):
@@ -296,3 +300,22 @@ class WumInventory:
         if save:
             self.save()
 
+    def add_odd_point(self, wum_name, save=True):
+        rarity = get_rarity(wum_name)
+
+        cur_odd_point = self.data["odd_point"]
+
+        cur_odd_point += catch_wum_odd_point[rarity - 1]
+
+        cur_odd_point = min(100, cur_odd_point)
+
+        self.data["odd_point"] = cur_odd_point
+
+        if save:
+            self.save()
+
+    def clear_odd_point(self, save=True):
+        self.data["odd_point"] = 0
+
+        if save:
+            self.save()

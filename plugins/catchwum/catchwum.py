@@ -5,7 +5,6 @@ from io import BytesIO
 
 from PIL import Image, ImageDraw, ImageFont
 
-
 from config.constant import font_path, background_dir
 from config.global_object import message_counter, global_wum_dict
 from models.wum_pool import wum_pool, system_inventory
@@ -78,16 +77,20 @@ async def catch_wum(qq_id, name):
 
             bg.paste(wum_img, (x, y), wum_img)
 
-    image = Image.new("RGB", (1000, 1540), '#2c2b2b')
+    image = Image.new("RGB", (1000, 1580), '#2c2b2b')
 
-    image.paste(bg, (50, 150), create_round_corner_mask(bg, 15))
+    image.paste(bg, (50, 190), create_round_corner_mask(bg, 15))
 
     # head label start
     draw = ImageDraw.Draw(image)
 
     head_label_font = ImageFont.truetype(font_path, 72)
+    coin_font = ImageFont.truetype(font_path, 40)
 
     draw.text((50, 30), name + " vs wum", fill="white", font=head_label_font)
+
+    draw.text((50, 125), f"wum币余额: {wum_inventory.data['coins']}      异化点: {wum_inventory.data['odd_point']}",
+              fill='white', font=coin_font)
 
     # caught wum image start
     caught_wum_bg = Image.new("RGB", (900, 350), '#545353')
@@ -133,7 +136,7 @@ async def catch_wum(qq_id, name):
         [(12, 82), (268, 338)], radius=15, outline='#2c2b2b', width=4
     )
 
-    image.paste(caught_wum_bg, (50, 735), create_round_corner_mask(caught_wum_bg, 15))
+    image.paste(caught_wum_bg, (50, 775), create_round_corner_mask(caught_wum_bg, 15))
 
     # random event start
     event_bg = Image.new("RGB", (900, 370), '#545353')
@@ -205,7 +208,7 @@ async def catch_wum(qq_id, name):
 
     draw_event.text((50, story_y), story, fill="white", font=event_wum_font_28)
 
-    image.paste(event_bg, (50, 1115), create_round_corner_mask(event_bg, 15))
+    image.paste(event_bg, (50, 1155), create_round_corner_mask(event_bg, 15))
 
     buf = BytesIO()
     image.save(buf, format='PNG')
