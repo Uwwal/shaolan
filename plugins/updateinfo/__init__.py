@@ -13,7 +13,9 @@ async def update_match(msg):
 
 
 async def update_info():
-    return ("0611:异化wum\n"
+    return ("0612:增加更多可异化wum\n"
+            "0612:教你笑点解析bot, 成为见解独特的黑马用户: 发送=help\n"
+            "0611:异化wum\n"
             "0610:迁移到了新的框架, 艾特问题应该修好了, 若出现存档丢失欢迎联系\n"
             "0609:偷wum已部署, 记得看help, 被偷了建议发动外交攻势\n"
             "0606:偷wum框架已完成, 测试进群732908053\n"

@@ -1,5 +1,7 @@
 import os
 
+from config.odd_tag import OddTag
+
 # main start
 
 cur_path = os.getcwd()
@@ -167,6 +169,7 @@ wums_rarity_dict = {
     "low-poly wum": 4,  # colorful odd
     "taffy wum": 4,  # colorful odd
     "wumiku": 4,  # colorful odd
+    "坍缩wum": 5,  # yi
 }
 
 max_wum_name_len = 0
@@ -197,17 +200,99 @@ steal_wum_trophy_weight_list = [10, 20, 30, 50, 70, 100]
 
 # make odd start
 
-make_odd_dict = {
-    "脸wum": [("无责任wum", 5)],
-    "暗影wum": [("无责任wum", 4), ("热异常wum", 3)],
-    "无wum": [("无责任wum", 5)],
-    "无面wum": [("无责任wum", 5)],
-    "圣诞wum": [("热异常wum", 5)],
-    "wum什戴尔": [("热异常wum", 5)],
-    "puzzle wum": [("热异常wum", 2), ("情绪wum", 5)],
-    "mope wum": [("情绪wum", 5)],
-    "wum守": [("情绪wum", 5)],
-    "wum": ["ERROR", -1]
+make_odd_tag_dict = {
+    "niconico wum": [],
+    "o wum": [],
+    "uwu wum": [],
+    "w wum": [],
+    "wum": [(OddTag.RED_COLOR, 1),
+            (OddTag.BLACK_COLOR, 2),
+            (OddTag.YELLOW_COLOR, 3),
+            (OddTag.GREEN_COLOR, 4),
+            (OddTag.BLUE_COLOR, 5),
+            (OddTag.PURPLE_COLOR, 6),
+            (OddTag.PINK_COLOR, 7),
+            (OddTag.GREY_COLOR, 8)],
+    "^^ wum": [],
+    "乏味wum": [],
+    "伤心wum": [],  # odd
+    "伤感wum": [],
+    "偷看wum": [(OddTag.SINGLE_EYE, 5)],  # odd
+    "六点wum": [],  # odd
+    "双生wum": [],  # odd
+    "可爱wum": [],
+    "吃洋葱wum": [(OddTag.PINK_COLOR, 2)],  # colorful odd
+    "后墙wum": [(OddTag.SINGLE_EYE, 5)],  # odd
+    "呲牙wum": [],
+    "哭哭wum": [(OddTag.BLUE_COLOR, 2)],  # colorful
+    "啊啊wum": [],
+    "啊啊啊啊啊啊wum": [],  # odd
+    "喜怒wum": [],
+    "四目wum": [],
+    "困惑wum": [],  # odd
+    "圣诞wum": [(OddTag.RED_COLOR, 5)],  # colorful odd
+    "大可爱wum": [],
+    "害羞wum": [(OddTag.RED_COLOR, 1)],  # colorful
+    "小眼wum": [],
+    "巨目wum": [],  # odd
+    "平滑wum": [],
+    "开心wum": [(OddTag.RED_COLOR, 1)],  # colorful
+    "微笑wum": [],
+    "惊惊惊讶wum": [],  # odd
+    "惊讶wum": [],  # odd
+    "旋转wum": [],
+    "无wum": [(OddTag.NAME_NONE, 3)],  # odd
+    "无嘴wum": [(OddTag.NAME_NONE, 3)],
+    "无目wum": [(OddTag.NAME_NONE, 3)],
+    "无耳wum": [(OddTag.NAME_NONE, 3)],  # odd
+    "无面wum": [(OddTag.NAME_NONE, 3)],  # odd
+    "暗影wum": [(OddTag.BLACK_COLOR, 5)],  # colorful odd
+    "极乐wum": [(OddTag.BLUE_COLOR, 2)],  # colorful
+    "死亡wum": [],
+    "毛球wum": [],  # odd
+    "海盗wum": [(OddTag.SINGLE_EYE, 3)],  # odd
+    "爬wum": [],  # odd
+    "爱可wum": [],
+    "狼wum": [],
+    "玉米wum": [(OddTag.RED_COLOR, 2), (OddTag.BLACK_COLOR, 3)],  # colorful odd
+    "疑惑wum": [],  # odd
+    "皮顽wum": [],
+    "眯眯wum": [],
+    "睡眠wum": [],  # odd
+    "福瑞wum": [],
+    "笨蛋wum": [],
+    "紧张wum": [],
+    "翻转mnw": [],  # odd
+    "翻转muw": [],
+    "肥wum": [],  # odd
+    "脸wum": [(OddTag.FACE, 5)],  # odd
+    "说话wum": [],  # odd
+    "这啥wum": [],  # odd
+    "陈睿wum": [(OddTag.YELLOW_COLOR, 3)],  # colorful
+    "韵律wum": [],
+    "顽皮wum": [],
+    "风暴wum": [(OddTag.BLACK_COLOR, 2), (OddTag.BLUE_COLOR, 3)],  # colorful odd
+    "鼻子wum": [],
+    "恋恋wum": [],  # odd
+    "wuw": [],
+    "mum": [],
+    "宿命wum": [(OddTag.PINK_COLOR, 5)],  # colorful odd
+    "雅典娜wum": [(OddTag.BLUE_COLOR, 3), (OddTag.GREY_COLOR, 2)],  # blind box
+    "娜典雅wum": [(OddTag.BLUE_COLOR, 3), (OddTag.GREY_COLOR, 2)],  # blind box
+    "wum什戴尔": [(OddTag.RED_COLOR, 5)],  # blind box
+    "wum守": [(OddTag.PINK_COLOR, 5), (OddTag.FLOWER, 3)],  # blind box
+    "史莱wum王": [(OddTag.YELLOW_COLOR, 4), (OddTag.RED_COLOR, 1)],  # blind box
+    "puzzle wum": [(OddTag.PINK_COLOR, 3), [OddTag.BLUE_COLOR, 2], [OddTag.FLOWER, 5]],  # colorful
+    "巨大wum": [],  # odd
+    "pou": [],  # odd
+    "mope wum": [(OddTag.BLUE_COLOR, 3), (OddTag.YELLOW_COLOR, 2), (OddTag.FLOWER, 5)],  # colorful
+    "无责任wum": [(OddTag.BLACK_COLOR, 5), (OddTag.YELLOW_COLOR, 1), (OddTag.FACE, 5)],  # yi
+    "热异常wum": [(OddTag.RED_COLOR, 5)],  # yi
+    "情绪wum": [(OddTag.BLUE_COLOR, 5), (OddTag.FLOWER, 5)],  # yi
+    "low-poly wum": [(OddTag.GREY_COLOR, 5)],  # colorful odd
+    "taffy wum": [(OddTag.PINK_COLOR, 5)],  # colorful odd
+    "wumiku": [(OddTag.GREEN_COLOR, 5)],  # colorful odd
+    "坍缩wum": [(OddTag.BLACK_COLOR, 5), [OddTag.SINGLE_EYE, 5]],  # yi
 }
 
 # help start

@@ -1,0 +1,23 @@
+from enum import Enum
+
+
+class OddTag(Enum):
+    ERROR = -1
+
+    RED_COLOR = 1
+    BLACK_COLOR = 2
+    YELLOW_COLOR = 3
+    GREEN_COLOR = 4
+    BLUE_COLOR = 5
+    PURPLE_COLOR = 6
+    PINK_COLOR = 7
+    GREY_COLOR = 8
+
+    FLOWER = 11
+
+    SINGLE_EYE = 101
+    FACE = 102
+
+    TOUHOU = 1001
+
+    NAME_NONE = 10001
