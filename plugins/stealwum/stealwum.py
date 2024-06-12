@@ -211,8 +211,8 @@ async def steal_wum(qq_id, at_id, qq_name, at_name):
 
     r_id = await insert_steal_wum_new_record(record)
 
-    await user_inventory.insert_steal_history(0, r_id, qq_id, at_id, save=False)
-    await at_inventory.insert_steal_history(1, r_id, qq_id, at_id, save=False)
+    await user_inventory.insert_steal_history(0, r_id, save=False)
+    await at_inventory.insert_steal_history(1, r_id, save=False)
 
     await user_inventory.clear_last_steal_catchwum_count(save=False)
     await at_inventory.add_steal_new_count(save=False)

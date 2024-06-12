@@ -27,23 +27,23 @@ default_attribute_list = [
 class WumInventory:
     def __init__(self, qq_id):
         self.qq_id = qq_id
-        self.qq = qq_id
         self.data = self.load()
 
     def load(self, is_debug=True):
-        query = {"id": self.qq}
+        query = {"id": self.qq_id}
         result = catchwum_collection.find_one(query)
 
         if result is None:
             default_data = {}
-            for i in default_attribute_list:
-
+            for i in default_attribute_list.copy():
                 default_data.update({i[0]: i[1]})
+                print("default data", i)
             return default_data
 
         data = result["content"]
+        print("data", data)
 
-        for i in default_attribute_list:
+        for i in default_attribute_list.copy():
             if i[0] not in data:
                 data.update({i[0]: i[1]})
 
@@ -121,11 +121,7 @@ class WumInventory:
         if save:
             self.save()
 
-    async def insert_steal_history(self, index, r_id, qq_id, at_id, save=True):
-        if self.qq_id != qq_id and self.qq_id != at_id:
-            print(f"插入{index} {r_id} 到{self.qq_id}")
-            return None
-
+    async def insert_steal_history(self, index, r_id, save=True):
         # 0 steal 1 defend
         self.data["steal_history_list"][index].append(r_id)
 
@@ -174,10 +170,10 @@ class WumInventory:
 
     def save(self):
         if self.data is None or self.data == {}:
-            print(self.qq, "SAVE ERROR")
+            print(self.qq_id, "SAVE ERROR")
             return False
 
-        query = {"id": self.qq}
+        query = {"id": self.qq_id}
         update_data = {"$set": {"content": self.data}}
         catchwum_collection.update_one(query, update_data, upsert=True)
 
