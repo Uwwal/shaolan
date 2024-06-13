@@ -1,14 +1,14 @@
 import random
 
 price_list = [5, 10]
-delta_value_list = [lambda: random.uniform(-2.3, 0.1), lambda: random.uniform(-10, 7.7)]
+delta_value_list = [lambda: random.uniform(-2.2, 0.1), lambda: random.uniform(-10, 7.7)]
 
 def get_value(i):
     price = price_list[i]
     max_value = price + delta_value_list[i]()
     cur_price = 0
     while cur_price < max_value:
-        cur_price += random.choice([0.0938, 0.2272, 1.178, 2.5001])
+        cur_price += random.choice([0.1074, 0.2745, 1.1127, 2.5102])
     return cur_price
 
 def calculate_expectation():

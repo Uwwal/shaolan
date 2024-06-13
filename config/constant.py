@@ -170,6 +170,7 @@ wums_rarity_dict = {
     "taffy wum": 4,  # colorful odd
     "wumiku": 4,  # colorful odd
     "坍缩wum": 5,  # yi
+    "赤蛮奇wum": 6,  # blind box
 }
 
 max_wum_name_len = 0
@@ -178,16 +179,16 @@ for i in wums_rarity_dict.keys():
 
 # steal start
 
-wum_steal_power_list = [1, 2, 3, 5, 10, 20]
+wum_steal_power_list = [1, 2, 3, 15, 15, 20]
 wum_defend_power_list = wum_steal_power_list
 
-wum_type_complexly_effect_list = [0.01, 0.02, 0.03, 0.05, 0.07, 0.1]
+wum_type_complexly_effect_list = [0.01, 0.02, 0.03, 0.07, 0.07, 0.1]
 
 max_steal_power = 300
 max_defend_power = 300
 
 base_steal_power = 0
-base_defend_power = 10
+base_defend_power = 5
 base_complexly_multiple = 1.1
 
 steal_strategy_string_list = ["注重稀有", "防卫破坏", "拿钱就跑"]
@@ -273,7 +274,7 @@ make_odd_tag_dict = {
     "顽皮wum": [],
     "风暴wum": [(OddTag.BLACK_COLOR, 2), (OddTag.BLUE_COLOR, 3)],  # colorful odd
     "鼻子wum": [],
-    "恋恋wum": [],  # odd
+    "恋恋wum": [(OddTag.TOUHOU, 5)],  # odd
     "wuw": [],
     "mum": [],
     "宿命wum": [(OddTag.PINK_COLOR, 5)],  # colorful odd
@@ -286,13 +287,14 @@ make_odd_tag_dict = {
     "巨大wum": [],  # odd
     "pou": [],  # odd
     "mope wum": [(OddTag.BLUE_COLOR, 3), (OddTag.YELLOW_COLOR, 2), (OddTag.FLOWER, 5)],  # colorful
-    "无责任wum": [(OddTag.BLACK_COLOR, 5), (OddTag.YELLOW_COLOR, 1), (OddTag.FACE, 5)],  # yi
+    "无责任wum": [(OddTag.BLACK_COLOR, 5), (OddTag.YELLOW_COLOR, 1), (OddTag.FACE, 5), (OddTag.NAME_NONE, 3)],  # yi
     "热异常wum": [(OddTag.RED_COLOR, 5)],  # yi
     "情绪wum": [(OddTag.BLUE_COLOR, 5), (OddTag.FLOWER, 5)],  # yi
     "low-poly wum": [(OddTag.GREY_COLOR, 5)],  # colorful odd
     "taffy wum": [(OddTag.PINK_COLOR, 5)],  # colorful odd
     "wumiku": [(OddTag.GREEN_COLOR, 5)],  # colorful odd
     "坍缩wum": [(OddTag.BLACK_COLOR, 5), [OddTag.SINGLE_EYE, 5]],  # yi
+    "赤蛮奇wum": [(OddTag.RED_COLOR, 5), (OddTag.BLUE_COLOR, 2), (OddTag.TOUHOU, 5)],  # blind box
 }
 
 # help start

@@ -68,6 +68,8 @@ async def catch_wum(qq_id, name):
         wum_img = Image.open(global_wum_dict[wum].buf)
 
         wum_img = wum_img.resize(wum_target_size)
+
+        wum_img.show()
         wum_width, wum_height = wum_img.size
 
         num = v["num"]

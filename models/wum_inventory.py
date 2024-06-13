@@ -9,20 +9,6 @@ from config.global_object import catchwum_collection, wum_rarity_dict_list
 from utils.wum_steal_utils import query_steal_wum_record
 from utils.wum_utils import get_rarity, get_wum_rarity_weight
 
-default_attribute_list = [
-    ("wums", {}),
-    ("last_time", -1),
-    ("wums_rarity_count", [0] * wum_rarity_num),
-    ("coins", 0),
-    ("last_steal_catchwum_count", 0),
-    ("steal_unit", {}),
-    ("defend_unit", {}),
-    ("steal_strategy", 0),
-    ("steal_history_list", [[], []]),
-    ("steal_new_count", 0),
-    ("odd_point", 0),
-]
-
 
 class WumInventory:
     def __init__(self, qq_id):
@@ -33,17 +19,30 @@ class WumInventory:
         query = {"id": self.qq_id}
         result = catchwum_collection.find_one(query)
 
+        default_attribute_list = [
+            ("wums", {}),
+            ("last_time", -1),
+            ("wums_rarity_count", [0] * wum_rarity_num),
+            ("coins", 0),
+            ("last_steal_catchwum_count", 0),
+            ("steal_unit", {}),
+            ("defend_unit", {}),
+            ("steal_strategy", 0),
+            ("steal_history_list", [[], []]),
+            ("steal_new_count", 0),
+            ("odd_point", 0),
+        ]
+
         if result is None:
             default_data = {}
-            for i in default_attribute_list.copy():
+            for i in default_attribute_list:
                 default_data.update({i[0]: i[1]})
                 print("default data", i)
             return default_data
 
         data = result["content"]
-        print("data", data)
 
-        for i in default_attribute_list.copy():
+        for i in default_attribute_list:
             if i[0] not in data:
                 data.update({i[0]: i[1]})
 
