@@ -125,7 +125,7 @@ async def history_to_image(solve_res, name):
                     draw.text((wum_image_draw_x, wum_image_draw_y + side), wum_name, color='white',
                               font=context_font)
 
-                    draw.text((wum_image_draw_x + side - 45, wum_image_draw_y + side), f"x{num}", color='white',
+                    draw.text((wum_image_draw_x + side - 22, wum_image_draw_y + side), f"x{num}", color='white',
                               font=context_font)
 
                     draw_wum_cur_time += 1

@@ -1,10 +1,12 @@
 from config.constant import max_wum_name_len
 from config.global_object import global_wum_name_list
+from plugins.makeoddwum.makeoddhistory import make_odd_history_to_image
 from plugins.makeoddwum.makeoddwum import make_odd_wum
 from utils.command_match import command_match
 from utils.string_utls import get_user_id, get_message_sender, get_event_command_text
 
 command = "异化wum"
+command_history = "异化历史"
 
 """
 异化wum相关:      支持=help详细查询
@@ -12,13 +14,20 @@ command = "异化wum"
     sum(num)==10
     wum和num交替填写, num为1时可省略
     使用_代替wum_name中的空格
+异化历史:
+    返回所有群最新10条异化记录
 """
+
 
 async def make_odd_wum_match(msg):
     return await command_match(msg, command)
 
 
-async def make_odd_wum_process_params(event):
+async def make_odd_history_match(msg):
+    return await command_match(msg, command_history)
+
+
+async def make_odd_wum_process_params(event, channel_id):
     qq_id = get_user_id(event)
     name = get_message_sender(event)
     text = await get_event_command_text(event)
@@ -57,4 +66,10 @@ async def make_odd_wum_process_params(event):
 
     wum_dict = dict(zip(success_name_list, success_num_list))
 
-    return await make_odd_wum(qq_id, name, wum_dict)
+    return await make_odd_wum(qq_id, name, wum_dict, channel_id)
+
+
+async def make_odd_history_process_params(channel_id, bot):
+    channel_info = await bot.get_group_info(group_id=int(channel_id), no_cache=False)
+
+    return await make_odd_history_to_image(channel_id, channel_info['group_name'])

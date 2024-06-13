@@ -18,6 +18,7 @@ client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["shaolan"]
 catchwum_collection = db["catchwum"]
 steal_history_collection = db["steal_history"]
+make_odd_history_collection = db["make_odd_history"]
 
 wum_png_list = [f for f in os.listdir(wums_dir) if os.path.isfile(os.path.join(wums_dir, f))]
 global_wum_dict = {wum.name: wum for wum in (Wum(f) for f in wum_png_list)}

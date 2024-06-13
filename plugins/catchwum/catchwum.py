@@ -40,7 +40,7 @@ async def catch_wum(qq_id, name):
         new_num = try_catch_res[2]
         last_time = "ERROR"
         catch_cooling = "ERROR"
-        r = random.randint(1, 60)
+        r = random.randint(1, 65)
         if r == 1:
             system_inventory.catch_wum()
         await wum_inventory.add_last_steal_catchwum_count()
@@ -69,7 +69,7 @@ async def catch_wum(qq_id, name):
 
         wum_img = wum_img.resize(wum_target_size)
 
-        wum_img.show()
+        # wum_img.show()
         wum_width, wum_height = wum_img.size
 
         num = v["num"]

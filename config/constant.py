@@ -215,9 +215,9 @@ make_odd_tag_dict = {
             (OddTag.PINK_COLOR, 7),
             (OddTag.GREY_COLOR, 8)],
     "^^ wum": [],
-    "乏味wum": [],
-    "伤心wum": [],  # odd
-    "伤感wum": [],
+    "乏味wum": [(OddTag.EMOTION, 1)],
+    "伤心wum": [(OddTag.EMOTION, 2)],  # odd
+    "伤感wum": [(OddTag.EMOTION, 1)],
     "偷看wum": [(OddTag.SINGLE_EYE, 5)],  # odd
     "六点wum": [],  # odd
     "双生wum": [],  # odd
@@ -225,22 +225,22 @@ make_odd_tag_dict = {
     "吃洋葱wum": [(OddTag.PINK_COLOR, 2)],  # colorful odd
     "后墙wum": [(OddTag.SINGLE_EYE, 5)],  # odd
     "呲牙wum": [],
-    "哭哭wum": [(OddTag.BLUE_COLOR, 2)],  # colorful
+    "哭哭wum": [(OddTag.BLUE_COLOR, 2), (OddTag.EMOTION, 3)],  # colorful
     "啊啊wum": [],
     "啊啊啊啊啊啊wum": [],  # odd
-    "喜怒wum": [],
+    "喜怒wum": [(OddTag.EMOTION, 1)],
     "四目wum": [],
-    "困惑wum": [],  # odd
+    "困惑wum": [(OddTag.EMOTION, 2)],  # odd
     "圣诞wum": [(OddTag.RED_COLOR, 5)],  # colorful odd
     "大可爱wum": [],
-    "害羞wum": [(OddTag.RED_COLOR, 1)],  # colorful
+    "害羞wum": [(OddTag.RED_COLOR, 1), (OddTag.EMOTION, 3)],  # colorful
     "小眼wum": [],
     "巨目wum": [],  # odd
     "平滑wum": [],
-    "开心wum": [(OddTag.RED_COLOR, 1)],  # colorful
+    "开心wum": [(OddTag.RED_COLOR, 1), (OddTag.EMOTION, 3)],  # colorful
     "微笑wum": [],
-    "惊惊惊讶wum": [],  # odd
-    "惊讶wum": [],  # odd
+    "惊惊惊讶wum": [(OddTag.EMOTION, 2)],  # odd
+    "惊讶wum": [(OddTag.EMOTION, 2)],  # odd
     "旋转wum": [],
     "无wum": [(OddTag.NAME_NONE, 3)],  # odd
     "无嘴wum": [(OddTag.NAME_NONE, 3)],
@@ -248,7 +248,7 @@ make_odd_tag_dict = {
     "无耳wum": [(OddTag.NAME_NONE, 3)],  # odd
     "无面wum": [(OddTag.NAME_NONE, 3)],  # odd
     "暗影wum": [(OddTag.BLACK_COLOR, 5)],  # colorful odd
-    "极乐wum": [(OddTag.BLUE_COLOR, 2)],  # colorful
+    "极乐wum": [(OddTag.BLUE_COLOR, 2), (OddTag.EMOTION, 3)],  # colorful
     "死亡wum": [],
     "毛球wum": [],  # odd
     "海盗wum": [(OddTag.SINGLE_EYE, 3)],  # odd
@@ -256,13 +256,13 @@ make_odd_tag_dict = {
     "爱可wum": [],
     "狼wum": [],
     "玉米wum": [(OddTag.RED_COLOR, 2), (OddTag.BLACK_COLOR, 3)],  # colorful odd
-    "疑惑wum": [],  # odd
+    "疑惑wum": [(OddTag.EMOTION, 2)],  # odd
     "皮顽wum": [],
     "眯眯wum": [],
     "睡眠wum": [],  # odd
     "福瑞wum": [],
     "笨蛋wum": [],
-    "紧张wum": [],
+    "紧张wum": [(OddTag.EMOTION, 1)],
     "翻转mnw": [],  # odd
     "翻转muw": [],
     "肥wum": [],  # odd
@@ -283,16 +283,17 @@ make_odd_tag_dict = {
     "wum什戴尔": [(OddTag.RED_COLOR, 5)],  # blind box
     "wum守": [(OddTag.PINK_COLOR, 5), (OddTag.FLOWER, 3)],  # blind box
     "史莱wum王": [(OddTag.YELLOW_COLOR, 4), (OddTag.RED_COLOR, 1)],  # blind box
-    "puzzle wum": [(OddTag.PINK_COLOR, 3), [OddTag.BLUE_COLOR, 2], [OddTag.FLOWER, 5]],  # colorful
+    "puzzle wum": [(OddTag.PINK_COLOR, 3), [OddTag.BLUE_COLOR, 2], [OddTag.FLOWER, 5], (OddTag.VOCALOID, 5)],  # colorful
     "巨大wum": [],  # odd
     "pou": [],  # odd
     "mope wum": [(OddTag.BLUE_COLOR, 3), (OddTag.YELLOW_COLOR, 2), (OddTag.FLOWER, 5)],  # colorful
-    "无责任wum": [(OddTag.BLACK_COLOR, 5), (OddTag.YELLOW_COLOR, 1), (OddTag.FACE, 5), (OddTag.NAME_NONE, 3)],  # yi
-    "热异常wum": [(OddTag.RED_COLOR, 5)],  # yi
-    "情绪wum": [(OddTag.BLUE_COLOR, 5), (OddTag.FLOWER, 5)],  # yi
+    "无责任wum": [(OddTag.BLACK_COLOR, 5), (OddTag.YELLOW_COLOR, 1), (OddTag.FACE, 5), (OddTag.NAME_NONE, 3),
+                 (OddTag.VOCALOID, 5)],  # yi
+    "热异常wum": [(OddTag.RED_COLOR, 5), (OddTag.VOCALOID, 5)],  # yi
+    "情绪wum": [(OddTag.BLUE_COLOR, 5), (OddTag.FLOWER, 5), (OddTag.EMOTION, 5)],  # yi
     "low-poly wum": [(OddTag.GREY_COLOR, 5)],  # colorful odd
     "taffy wum": [(OddTag.PINK_COLOR, 5)],  # colorful odd
-    "wumiku": [(OddTag.GREEN_COLOR, 5)],  # colorful odd
+    "wumiku": [(OddTag.GREEN_COLOR, 5), (OddTag.VOCALOID, 5)],  # colorful odd
     "坍缩wum": [(OddTag.BLACK_COLOR, 5), [OddTag.SINGLE_EYE, 5]],  # yi
     "赤蛮奇wum": [(OddTag.RED_COLOR, 5), (OddTag.BLUE_COLOR, 2), (OddTag.TOUHOU, 5)],  # blind box
 }
@@ -329,6 +330,20 @@ help_docs_dict = {
         "把异化点和10个wum送给我，我自有方法呀\n"
         "哈哈世界开始搞笑了\n"
         "笑自己无知\n"
-        "(你注意到一个纸条: ▇▇▇▇ 适格▇▇m才▇▇异化 失▇▇失▇▇▇▇败)"
+        "(你注意到一个纸条: ▇▇▇▇ 适格▇▇m才▇▇异化 失▇▇失▇▇▇▇败)",
+
+        "告别Doctor不久，你遇到了一位独目老人\n"
+        "不是独眼巨人那样只能看到一只眼\n"
+        "而是你怎么切换角度也无法看到他的另一只眼\n"
+        "你也是来寻求异化真实的人吗\n"
+        "原来如此，想必你也很困惑吧，毕竟Doctor是那样一个怪人\n"
+        "我倒是有一点过来人经验可以给你\n"
+        "首先，异化点是一种魔法介质\n"
+        "如果介质不足，异化仪式成功率就会受到很大影响\n"
+        "然后，如果异化wum受到wum们足够吸引的话\n"
+        "就算失败也会降下一些wum\n"
+        "这还是看你的本事，能让异化体们有多少兴趣\n"
+        "最后，请好好探索wum们的潜力吧\n"
+        "你心里暗想，独目对异化仪式竟有如此理解"
     ]
 }

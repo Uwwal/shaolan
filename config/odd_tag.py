@@ -17,7 +17,9 @@ class OddTag(Enum):
 
     SINGLE_EYE = 101
     FACE = 102
+    EMOTION = 103
 
     TOUHOU = 1001
+    VOCALOID = 1002
 
     NAME_NONE = 10001

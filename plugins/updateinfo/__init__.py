@@ -13,7 +13,8 @@ async def update_match(msg):
 
 
 async def update_info():
-    return ("0612:增加更多可异化wum\n"
+    return ("0613:增加更多可异化wum，异化提示增强，加入异化历史\n"
+            "0612:增加更多可异化wum\n"
             "0612:教你笑点解析bot, 成为见解独特的黑马用户: 发送=help\n"
             "0611:异化wum\n"
             "0610:迁移到了新的框架, 艾特问题应该修好了, 若出现存档丢失欢迎联系\n"

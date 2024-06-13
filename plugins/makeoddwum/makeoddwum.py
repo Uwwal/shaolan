@@ -3,11 +3,12 @@ import random
 from config.constant import make_odd_tag_dict
 from config.global_object import tag_yi_wum_dict
 from models.wum_pool import wum_pool
+from plugins.makeoddwum.makeoddhistory import insert_make_odd_history
 from plugins.wumstoimage.wumstoimage import wums_to_image
 from utils.wum_utils import wum_dict_standard
 
 
-async def make_odd_wum(qq_id, name, wum_dict):
+async def make_odd_wum(qq_id, name, wum_dict, channel_id):
     wum_inventory = wum_pool.get_inventory(qq_id)
 
     if isinstance(wum_inventory, str):
@@ -68,6 +69,8 @@ async def make_odd_wum(qq_id, name, wum_dict):
 
         wum_pool.release_inventory(qq_id)
 
+        await insert_make_odd_history(0, wum_dict, channel_id, cur_odd_point)
+
         return f"{name}，你的测验成绩是0"
 
     odd_name_list = list(odd_dict.keys())
@@ -100,5 +103,7 @@ async def make_odd_wum(qq_id, name, wum_dict):
 
     head_label_text_1 = name + "的异化结果"
     head_label_text_2 = f"wum币余额: {wum_inventory.data['coins']}      异化点: {wum_inventory.data['odd_point']}"
+
+    await insert_make_odd_history(gain_wum_dict, wum_dict, channel_id, cur_odd_point)
 
     return await wums_to_image(await wum_dict_standard(gain_wum_dict), 0, head_label_text_1, head_label_text_2, True)
