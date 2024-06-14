@@ -250,7 +250,7 @@ make_odd_tag_dict = {
     "暗影wum": [(OddTag.BLACK_COLOR, 5)],  # colorful odd
     "极乐wum": [(OddTag.BLUE_COLOR, 2), (OddTag.EMOTION, 3)],  # colorful
     "死亡wum": [],
-    "毛球wum": [],  # odd
+    "毛球wum": [(OddTag.BLACK_COLOR, 2)],  # odd
     "海盗wum": [(OddTag.SINGLE_EYE, 3)],  # odd
     "爬wum": [],  # odd
     "爱可wum": [],

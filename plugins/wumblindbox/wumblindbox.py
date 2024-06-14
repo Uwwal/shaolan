@@ -47,7 +47,7 @@ async def wum_blind_box(qq_id, name, type_index):
 
     if type_index == 1:
         r = random.randint(0, 100)
-        if r > 97:
+        if r > 96:
             skip_normal_blind_box = True
             wum = random.choice(wum_rarity_dict_list[dian_rarity])
             wum_dict.update({wum.name: 1})

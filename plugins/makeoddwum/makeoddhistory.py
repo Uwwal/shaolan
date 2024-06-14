@@ -222,10 +222,10 @@ async def make_odd_history_to_image(channel_id, channel_name):
 
                 image.paste(resized_wum, (tem_x_offset, tem_y_offset), resized_wum)
 
-                draw.text((tem_x_offset, tem_y_offset + side), "wum", color='white',
+                draw.text((tem_x_offset, tem_y_offset + side), wum_name, color='white',
                           font=row_wum_font)
 
-                draw.text((tem_x_offset + side - row_wum_font_size, tem_y_offset + side), "x0",
+                draw.text((tem_x_offset + side - row_wum_font_size, tem_y_offset + side), f"x{num}",
                           color='white',
                           font=row_wum_font)
 

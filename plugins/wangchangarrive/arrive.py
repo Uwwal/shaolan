@@ -157,6 +157,14 @@ async def wangchang_arrive_mirror(image, reverse=False):
 
     cv2_image = cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
 
+    if width > 1500 and height > 900:
+        new_width = 1500
+        new_height = int(new_width / width * height)
+
+        cv2_image = cv2.resize(cv2_image, (new_width, new_height))
+
+        image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
     gray = cv2.cvtColor(cv2_image, cv2.COLOR_BGR2GRAY)
 
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.01, minNeighbors=30, minSize=(20, 20))
