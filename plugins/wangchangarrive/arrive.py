@@ -48,100 +48,100 @@ async def wangchang_arrive(image, p, img_type):
         faces = face_cascade_3.detectMultiScale(gray, scaleFactor=1.01, minNeighbors=30, minSize=(20, 20))
         faces_num = len(faces)
         if faces_num == 0:
-            del cv2_image
+            del cv2_image, gray, faces
             gc.collect()
             return None
 
     # image = image.resize((1080, int(image.size[1] * 1080 / image.size[0])), Image.Resampling.LANCZOS)
 
-    f_wangchang = Image.open(p)
-    for (x, y, w, h) in faces:
-        face_region = gray[y:y + h, x:x + w]
+    with Image.open(p) as f_wangchang:
+        for (x, y, w, h) in faces:
+            face_region = gray[y:y + h, x:x + w]
 
-        eyes = eye_cascade.detectMultiScale(face_region)
+            eyes = eye_cascade.detectMultiScale(face_region)
 
-        eyes_num = len(eyes)
+            eyes_num = len(eyes)
 
-        if eyes_num < 2:
-            f_wangchang_resized = f_wangchang.resize((w, h), Image.Resampling.LANCZOS)
+            if eyes_num < 2:
+                f_wangchang_resized = f_wangchang.resize((w, h), Image.Resampling.LANCZOS)
 
-            paste_y = y
-            if img_type == '捏脸':
-                paste_y += int(h * 0.7)
+                paste_y = y
+                if img_type == '捏脸':
+                    paste_y += int(h * 0.7)
 
-            image.paste(f_wangchang_resized, (x, paste_y), f_wangchang_resized)
-        else:
-            if eyes_num > 2:
-                eyes[0], eyes[1] = true_eyes_detect(eyes, (x, y, w, h))
-
-            if eyes[0][0] < eyes[1][0]:
-                left_eye = eyes[0]
-                right_eye = eyes[1]
+                image.paste(f_wangchang_resized, (x, paste_y), f_wangchang_resized)
             else:
-                left_eye = eyes[1]
-                right_eye = eyes[0]
-            # draw = ImageDraw.Draw(image)
-            # draw.rectangle([x, y, x + w, y + h], outline="blue", width=2)
+                if eyes_num > 2:
+                    eyes[0], eyes[1] = true_eyes_detect(eyes, (x, y, w, h))
 
-            # for (ex, ey, ew, eh) in eyes:
-            #     draw.rectangle([x + ex, y + ey, x + ex + ew, y + ey + eh], outline="green", width=2)
+                if eyes[0][0] < eyes[1][0]:
+                    left_eye = eyes[0]
+                    right_eye = eyes[1]
+                else:
+                    left_eye = eyes[1]
+                    right_eye = eyes[0]
+                # draw = ImageDraw.Draw(image)
+                # draw.rectangle([x, y, x + w, y + h], outline="blue", width=2)
 
-            middle_point_left_eye_x = (left_eye[0] * 2 + left_eye[2]) / 2
-            middle_point_left_eye_y = (left_eye[1] * 2 + left_eye[3]) / 2
-            middle_point_right_eye_x = (right_eye[0] * 2 + right_eye[2]) / 2
-            middle_point_right_eye_y = (right_eye[1] * 2 + right_eye[3]) / 2
+                # for (ex, ey, ew, eh) in eyes:
+                #     draw.rectangle([x + ex, y + ey, x + ex + ew, y + ey + eh], outline="green", width=2)
 
-            angle = calculate_angle(middle_point_left_eye_x, middle_point_left_eye_y, middle_point_right_eye_x,
-                                    middle_point_right_eye_y)
+                middle_point_left_eye_x = (left_eye[0] * 2 + left_eye[2]) / 2
+                middle_point_left_eye_y = (left_eye[1] * 2 + left_eye[3]) / 2
+                middle_point_right_eye_x = (right_eye[0] * 2 + right_eye[2]) / 2
+                middle_point_right_eye_y = (right_eye[1] * 2 + right_eye[3]) / 2
 
-            middle_point_x = (middle_point_left_eye_x + middle_point_right_eye_x) / 2 + x
-            middle_point_y = (middle_point_left_eye_y + middle_point_right_eye_y) / 2 + y
+                angle = calculate_angle(middle_point_left_eye_x, middle_point_left_eye_y, middle_point_right_eye_x,
+                                        middle_point_right_eye_y)
 
-            # draw.ellipse([(middle_point_x - 10, middle_point_y - 10), (middle_point_x + 10, middle_point_y + 10)],
-            #              outline="black", width=3)
+                middle_point_x = (middle_point_left_eye_x + middle_point_right_eye_x) / 2 + x
+                middle_point_y = (middle_point_left_eye_y + middle_point_right_eye_y) / 2 + y
 
-            f_wangchang_ = f_wangchang.resize((h, h), Image.Resampling.LANCZOS)
+                # draw.ellipse([(middle_point_x - 10, middle_point_y - 10), (middle_point_x + 10, middle_point_y + 10)],
+                #              outline="black", width=3)
 
-            f_wangchang_rotated = f_wangchang_.rotate(angle, expand=True)
-            side = f_wangchang_rotated.size[0]
+                f_wangchang_ = f_wangchang.resize((h, h), Image.Resampling.LANCZOS)
 
-            wc_middle_point = get_rotate_point(angle, h, side, img_type)
+                f_wangchang_rotated = f_wangchang_.rotate(angle, expand=True)
+                side = f_wangchang_rotated.size[0]
 
-            w_1 = int(w * get_multi_scale(img_type))
-            h_1 = int(h * get_multi_scale(img_type))
+                wc_middle_point = get_rotate_point(angle, h, side, img_type)
 
-            f_wangchang_resized = f_wangchang_rotated.resize((w_1, h_1), Image.Resampling.LANCZOS)
-            wc_middle_point_resized = wc_middle_point[0] * w_1 / side, wc_middle_point[1] * h_1 / side
+                w_1 = int(w * get_multi_scale(img_type))
+                h_1 = int(h * get_multi_scale(img_type))
 
-            nielian_delta_x = 0
-            nielian_delta_y = 0
-            if img_type == '捏脸':
-                nielian_delta_x += int(math.sin(math.radians(angle)) * (x + w - middle_point_x) * 0.4)
-                nielian_delta_y += int(math.cos(math.radians(angle)) * (y + h - middle_point_y) * 0.4)
+                f_wangchang_resized = f_wangchang_rotated.resize((w_1, h_1), Image.Resampling.LANCZOS)
+                wc_middle_point_resized = wc_middle_point[0] * w_1 / side, wc_middle_point[1] * h_1 / side
 
-            image.paste(f_wangchang_resized,
-                        (round(middle_point_x - wc_middle_point_resized[0] + nielian_delta_x),
-                         round(middle_point_y - wc_middle_point_resized[1] + nielian_delta_y)),
-                        f_wangchang_resized)
+                nielian_delta_x = 0
+                nielian_delta_y = 0
+                if img_type == '捏脸':
+                    nielian_delta_x += int(math.sin(math.radians(angle)) * (x + w - middle_point_x) * 0.4)
+                    nielian_delta_y += int(math.cos(math.radians(angle)) * (y + h - middle_point_y) * 0.4)
 
-            # draw.ellipse(
-            #     [(round(middle_point_x - wc_middle_point[0]) - 10,
-            #       round(middle_point_y - wc_middle_point[1]) - 10),
-            #      (round(middle_point_x - wc_middle_point[0]) + 10,
-            #       round(middle_point_y - wc_middle_point[1]) + 10)],
-            #     outline="purple", width=4)
-            #
-            # draw.ellipse(
-            #     [(round(middle_point_x - wc_middle_point[0]) + wc_middle_point[0] - 10,
-            #       round(middle_point_y - wc_middle_point[1]) + wc_middle_point[1] - 10),
-            #      (round(middle_point_x - wc_middle_point[0]) + wc_middle_point[0] + 10,
-            #       round(middle_point_y - wc_middle_point[1]) + wc_middle_point[1] + 10)],
-            #     outline="red", width=3)
+                image.paste(f_wangchang_resized,
+                            (round(middle_point_x - wc_middle_point_resized[0] + nielian_delta_x),
+                             round(middle_point_y - wc_middle_point_resized[1] + nielian_delta_y)),
+                            f_wangchang_resized)
+
+                # draw.ellipse(
+                #     [(round(middle_point_x - wc_middle_point[0]) - 10,
+                #       round(middle_point_y - wc_middle_point[1]) - 10),
+                #      (round(middle_point_x - wc_middle_point[0]) + 10,
+                #       round(middle_point_y - wc_middle_point[1]) + 10)],
+                #     outline="purple", width=4)
+                #
+                # draw.ellipse(
+                #     [(round(middle_point_x - wc_middle_point[0]) + wc_middle_point[0] - 10,
+                #       round(middle_point_y - wc_middle_point[1]) + wc_middle_point[1] - 10),
+                #      (round(middle_point_x - wc_middle_point[0]) + wc_middle_point[0] + 10,
+                #       round(middle_point_y - wc_middle_point[1]) + wc_middle_point[1] + 10)],
+                #     outline="red", width=3)
 
     buf = BytesIO()
     image.save(buf, format='PNG')
 
-    del cv2_image
+    del cv2_image, gray, faces, eyes
     gc.collect()
     return await base64_to_message_segment(buf)
 
@@ -157,13 +157,19 @@ async def wangchang_arrive_mirror(image, reverse=False):
 
     cv2_image = cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
 
-    if width > 1500 and height > 900:
-        new_width = 1500
-        new_height = int(new_width / width * height)
-
+    if width > 700 and height > 700:
+        if width > height:
+            new_width = 700
+            new_height = int(new_width / width * height)
+        else:
+            new_height = 700
+            new_width = int(new_height / height * width)
         cv2_image = cv2.resize(cv2_image, (new_width, new_height))
 
         image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+        height = new_height
+        width = new_width
 
     gray = cv2.cvtColor(cv2_image, cv2.COLOR_BGR2GRAY)
 
@@ -179,7 +185,7 @@ async def wangchang_arrive_mirror(image, reverse=False):
         buf = BytesIO()
         image.save(buf, format='PNG')
 
-        del cv2_image
+        del cv2_image, gray, faces
         gc.collect()
         return await base64_to_message_segment(buf)
 
@@ -254,7 +260,7 @@ async def wangchang_arrive_mirror(image, reverse=False):
 
     # print(end_time - start_time)
 
-    del cv2_image
+    del cv2_image, gray, faces, eyes
     gc.collect()
     return await base64_to_message_segment(buf)
 

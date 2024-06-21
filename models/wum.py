@@ -20,6 +20,8 @@ class Wum:
         self.buf = BytesIO()
         image_square.save(self.buf, format='PNG')
 
+        image.close()
+
     def __eq__(self, other):
         if isinstance(other, Wum):
             return self.name == other.name

@@ -109,6 +109,8 @@ async def wums_to_image(wums, page_id, head_label_text_1="", head_label_text_2="
                 width=4
             )
 
+            wum_img.close()
+
     buf = BytesIO()
     image.save(buf, format='PNG')
 

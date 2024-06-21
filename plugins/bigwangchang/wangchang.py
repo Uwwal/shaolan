@@ -125,6 +125,9 @@ async def random_image(args, image_content, p, from_gif=False, sprite_continuous
     buf = BytesIO()
     base.save(buf, format='PNG')
 
+    base.close()
+    f_wangchang.close()
+
     if from_gif:
         return buf
 

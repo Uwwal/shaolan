@@ -1,3 +1,4 @@
+import gc
 import random
 from io import BytesIO
 
@@ -251,6 +252,8 @@ async def recycle_wum_gif(name, wum_dict, coins, sum_num):
 
             wum_image_resize = wum_image.resize(new_wum_size)
 
+            wum_image.close()
+
             for _ in range(num):
                 pos, angle = wum_continuous.get(wum_index, gif_index)
 
@@ -290,5 +293,12 @@ async def recycle_wum_gif(name, wum_dict, coins, sum_num):
         # transparency=0,
         disposal=2,
     )
+
+    for img in png_list:
+        img.close()
+
+    del png_list
+
+    gc.collect()
 
     return await base64_to_message_segment(gif_io)
