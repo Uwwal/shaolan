@@ -234,7 +234,7 @@ async def recycle_wum_gif(name, wum_dict, coins, sum_num):
 
     gif_index = 0
 
-    png_list = [Image.open(f) for f in matong_png_list]
+    png_list = [Image.open(BytesIO(f.getvalue())) for f in matong_png_list]
 
     res_list = []
 
@@ -248,7 +248,7 @@ async def recycle_wum_gif(name, wum_dict, coins, sum_num):
         wum_index = 0
 
         for wum_name, num in wum_dict.items():
-            wum_image = Image.open(global_wum_dict[wum_name].buf)
+            wum_image = Image.open(global_wum_dict[wum_name].get_buf())
 
             wum_image_resize = wum_image.resize(new_wum_size)
 

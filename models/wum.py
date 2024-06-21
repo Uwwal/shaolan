@@ -17,10 +17,13 @@ class Wum:
         image = Image.open(path)
         image_square = image_to_square(image)
 
-        self.buf = BytesIO()
-        image_square.save(self.buf, format='PNG')
+        self._buf = BytesIO()
+        image_square.save(self._buf, format='PNG')
 
         image.close()
+
+    def get_buf(self):
+        return BytesIO(self._buf.getvalue())
 
     def __eq__(self, other):
         if isinstance(other, Wum):

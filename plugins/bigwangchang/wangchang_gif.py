@@ -42,7 +42,7 @@ async def random_wangchang_gif(image_url, p, img_type, args):
                 with Image.open(img_bytes_io) as img:
                     images.append(img.copy())
 
-        del img_bytes_io
+            del img_bytes_io
 
         # images = [Image.open(png) for png
         #           in png_list]

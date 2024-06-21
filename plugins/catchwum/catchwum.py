@@ -65,7 +65,7 @@ async def catch_wum(qq_id, name):
         bg_width, bg_height = bg.size
 
         for wum, v in wum_inventory.data["wums"].items():
-            wum_img = Image.open(global_wum_dict[wum].buf)
+            wum_img = Image.open(global_wum_dict[wum].get_buf())
 
             wum_img = wum_img.resize(wum_target_size)
 
@@ -108,7 +108,7 @@ async def catch_wum(qq_id, name):
         if is_sleep:
             draw_caught_wum.text((300, 120), catch_cooling, fill="white", font=caught_wum_font_30)
 
-            wum_img = Image.open(global_wum_dict["睡眠wum"].buf)
+            wum_img = Image.open(global_wum_dict["睡眠wum"].get_buf())
 
             wum_alpha = await change_non_transparent_alpha(wum_img, 0.6)
 
@@ -118,7 +118,7 @@ async def catch_wum(qq_id, name):
 
             caught_wum_bg.paste(resized_wum, (630, 85), resized_wum)
         else:
-            caught_wum_img = Image.open(new_wum.buf)
+            caught_wum_img = Image.open(new_wum.get_buf())
 
             resized_wum = caught_wum_img.resize((250, 250))
 

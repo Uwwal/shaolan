@@ -138,26 +138,26 @@ async def make_odd_history_to_image(channel_id, channel_name):
 
                     wum = global_wum_dict[wum_name]
 
-                    with Image.open(wum.buf) as wum_img:
+                    wum_img = Image.open(wum.get_buf())
 
-                        resized_wum = wum_img.resize((side, side))
+                    resized_wum = wum_img.resize((side, side))
 
-                        wum_image_draw_x = (x_offset +
-                                            (col_weight - side * 2 - side * len_wum_first_row -
-                                             wum_image_margin * (len_wum_first_row - 1)) // 2
-                                            + loop_time * (side + wum_image_margin))
-                        wum_image_draw_y = tem_y_offset
+                    wum_image_draw_x = (x_offset +
+                                        (col_weight - side * 2 - side * len_wum_first_row -
+                                         wum_image_margin * (len_wum_first_row - 1)) // 2
+                                        + loop_time * (side + wum_image_margin))
+                    wum_image_draw_y = tem_y_offset
 
-                        image.paste(resized_wum, (wum_image_draw_x, wum_image_draw_y), resized_wum)
+                    image.paste(resized_wum, (wum_image_draw_x, wum_image_draw_y), resized_wum)
 
-                        draw.text((wum_image_draw_x, wum_image_draw_y + side), wum_name, color='white',
-                                  font=row_wum_font)
+                    draw.text((wum_image_draw_x, wum_image_draw_y + side), wum_name, color='white',
+                              font=row_wum_font)
 
-                        draw.text((wum_image_draw_x + side - row_wum_font_size, wum_image_draw_y + side), f"x{num}",
-                                  color='white',
-                                  font=row_wum_font)
+                    draw.text((wum_image_draw_x + side - row_wum_font_size, wum_image_draw_y + side), f"x{num}",
+                              color='white',
+                              font=row_wum_font)
 
-                        loop_time += 1
+                    loop_time += 1
 
             else:
                 tem_y_offset += side // 2
@@ -165,25 +165,25 @@ async def make_odd_history_to_image(channel_id, channel_name):
                 for wum_name, num in wum_dict.items():
                     wum = global_wum_dict[wum_name]
 
-                    with Image.open(wum.buf) as wum_img:
-                        resized_wum = wum_img.resize((side, side))
+                    wum_img = Image.open(wum.get_buf())
+                    resized_wum = wum_img.resize((side, side))
 
-                        wum_image_draw_x = (
-                                x_offset + (col_weight - side * 2 - side * len_wum_dict - wum_image_margin * (
-                                    len_wum_dict - 1)) // 2
-                                + loop_time * (side + wum_image_margin))
-                        wum_image_draw_y = tem_y_offset
+                    wum_image_draw_x = (
+                            x_offset + (col_weight - side * 2 - side * len_wum_dict - wum_image_margin * (
+                                len_wum_dict - 1)) // 2
+                            + loop_time * (side + wum_image_margin))
+                    wum_image_draw_y = tem_y_offset
 
-                        image.paste(resized_wum, (wum_image_draw_x, wum_image_draw_y), resized_wum)
+                    image.paste(resized_wum, (wum_image_draw_x, wum_image_draw_y), resized_wum)
 
-                        draw.text((wum_image_draw_x, wum_image_draw_y + side), wum_name, color='white',
-                                  font=row_wum_font)
+                    draw.text((wum_image_draw_x, wum_image_draw_y + side), wum_name, color='white',
+                              font=row_wum_font)
 
-                        draw.text((wum_image_draw_x + side - row_wum_font_size, wum_image_draw_y + side), f"x{num}",
-                                  color='white',
-                                  font=row_wum_font)
+                    draw.text((wum_image_draw_x + side - row_wum_font_size, wum_image_draw_y + side), f"x{num}",
+                              color='white',
+                              font=row_wum_font)
 
-                        loop_time += 1
+                    loop_time += 1
 
             tem_x_offset = x_offset + side * 5 + side // 2
             tem_y_offset = y_offset + side // 2
@@ -198,7 +198,7 @@ async def make_odd_history_to_image(channel_id, channel_name):
             elif len(result) == 0:
                 wum = global_wum_dict["wum"]
 
-                wum_img = Image.open(wum.buf)
+                wum_img = Image.open(wum.get_buf())
 
                 resized_wum = wum_img.resize((side, side))
 
@@ -217,7 +217,7 @@ async def make_odd_history_to_image(channel_id, channel_name):
 
                 wum = global_wum_dict[wum_name]
 
-                wum_img = Image.open(wum.buf)
+                wum_img = Image.open(wum.get_buf())
 
                 resized_wum = wum_img.resize((side, side))
 

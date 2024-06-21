@@ -112,7 +112,7 @@ async def history_to_image(solve_res, name):
 
                     wum = global_wum_dict[wum_name]
 
-                    wum_img = Image.open(wum.buf)
+                    wum_img = Image.open(wum.get_buf())
 
                     resized_wum = wum_img.resize((side, side))
 

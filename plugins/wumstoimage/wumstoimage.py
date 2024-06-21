@@ -76,7 +76,7 @@ async def wums_to_image(wums, page_id, head_label_text_1="", head_label_text_2="
             wum_name, rarity, num, is_protected = wum_sorted_list[index]
             wum = global_wum_dict[wum_name]
 
-            wum_img = Image.open(wum.buf)
+            wum_img = Image.open(wum.get_buf())
 
             resized_wum = wum_img.resize((250, 250))
 
