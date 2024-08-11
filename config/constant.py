@@ -16,12 +16,12 @@ bot_qq = "1077230687"
 if is_lemmn:
     bot_qq = lemmn_qq
 
-learn_word_channel_list = ["560954591", "617557230", "897380826"]
+learn_word_channel_list = ["560954591"]
 ignore_list = [bot_qq, "1006130858", "2362510272"]
 ignore_channel_list = []
 if not is_lemmn:
     ignore_channel_list.append("732908053")
-iupar_channel_list = ["560954591", "783925178", "617557230", "897380826", "178362967"]
+iupar_channel_list = ["560954591", "783925178", "617557230", "897380826", "178362967", "190754393"]
 superuser_list = ["3476365499", "3165862735"]
 
 # dir start
@@ -70,7 +70,7 @@ catch_wum_odd_point = [20, 10, 5, 0, 0, 0]
 
 recycle_coin_list = [0.2, 0.6, 1.2, 2.0]
 
-keep_wum_rarity_num = [20, 30, 60, 50, 0, 999]
+keep_wum_rarity_num = [100, 100, 100, 100, 0, 999]
 
 wum_page_capacity = 40
 
@@ -171,6 +171,12 @@ wums_rarity_dict = {
     "wumiku": 4,  # colorful odd
     "坍缩wum": 5,  # yi
     "赤蛮奇wum": 6,  # blind box
+    "惑星wum": 6,  # blind box
+    "kurarin wum": 5,  # yi
+    "里表wum": 5,  # yi
+    "小桶wum": 4,  # colorful odd
+    "青蛙子wum": 4,  # colorful odd
+    "wum燐": 6,  # blind box
 }
 
 max_wum_name_len = 0
@@ -207,20 +213,20 @@ make_odd_tag_dict = {
     "uwu wum": [],
     "w wum": [],
     "wum": [(OddTag.RED_COLOR, 1),
-            (OddTag.BLACK_COLOR, 2),
-            (OddTag.YELLOW_COLOR, 3),
-            (OddTag.GREEN_COLOR, 4),
-            (OddTag.BLUE_COLOR, 5),
-            (OddTag.PURPLE_COLOR, 6),
-            (OddTag.PINK_COLOR, 7),
-            (OddTag.GREY_COLOR, 8)],
+            (OddTag.BLACK_COLOR, 1),
+            (OddTag.YELLOW_COLOR, 1),
+            (OddTag.GREEN_COLOR, 1),
+            (OddTag.BLUE_COLOR, 1),
+            (OddTag.PURPLE_COLOR, 1),
+            (OddTag.PINK_COLOR, 1),
+            (OddTag.GREY_COLOR, 1)],
     "^^ wum": [],
     "乏味wum": [(OddTag.EMOTION, 1)],
     "伤心wum": [(OddTag.EMOTION, 2)],  # odd
     "伤感wum": [(OddTag.EMOTION, 1)],
     "偷看wum": [(OddTag.SINGLE_EYE, 5)],  # odd
     "六点wum": [],  # odd
-    "双生wum": [],  # odd
+    "双生wum": [(OddTag.MULTI_WUM, 5)],  # odd
     "可爱wum": [],
     "吃洋葱wum": [(OddTag.PINK_COLOR, 2)],  # colorful odd
     "后墙wum": [(OddTag.SINGLE_EYE, 5)],  # odd
@@ -246,7 +252,7 @@ make_odd_tag_dict = {
     "无嘴wum": [(OddTag.NAME_NONE, 3)],
     "无目wum": [(OddTag.NAME_NONE, 3)],
     "无耳wum": [(OddTag.NAME_NONE, 3)],  # odd
-    "无面wum": [(OddTag.NAME_NONE, 3)],  # odd
+    "无面wum": [(OddTag.NAME_NONE, 3), (OddTag.NO_FACE, 5)],  # odd
     "暗影wum": [(OddTag.BLACK_COLOR, 5)],  # colorful odd
     "极乐wum": [(OddTag.BLUE_COLOR, 2), (OddTag.EMOTION, 3)],  # colorful
     "死亡wum": [],
@@ -296,6 +302,12 @@ make_odd_tag_dict = {
     "wumiku": [(OddTag.GREEN_COLOR, 5), (OddTag.VOCALOID, 5)],  # colorful odd
     "坍缩wum": [(OddTag.BLACK_COLOR, 5), [OddTag.SINGLE_EYE, 5]],  # yi
     "赤蛮奇wum": [(OddTag.RED_COLOR, 5), (OddTag.BLUE_COLOR, 2), (OddTag.TOUHOU, 5)],  # blind box
+    "惑星wum": [(OddTag.RED_COLOR, 5), (OddTag.VOCALOID, 5)],  # blind box
+    "kurarin wum": [(OddTag.PINK_COLOR, 5), (OddTag.VOCALOID, 5), (OddTag.MULTI_WUM, 5)],  # yi
+    "里表wum": [(OddTag.BLACK_COLOR, 3), (OddTag.GREY_COLOR, 2), (OddTag.VOCALOID, 5), (OddTag.MULTI_WUM, 2), (OddTag.NO_FACE, 5)],  # yi
+    "小桶wum": [(OddTag.GREEN_COLOR, 2), (OddTag.BROWN_COLOR, 3), (OddTag.TOUHOU, 5)],  # colorful odd
+    "青蛙子wum": [(OddTag.YELLOW_COLOR, 5), (OddTag.TOUHOU, 5)],  # colorful odd
+    "wum燐": [(OddTag.PINK_COLOR, 3), (OddTag.BLUE_COLOR, 2), (OddTag.TOUHOU, 5)],  # blind box
 }
 
 # help start

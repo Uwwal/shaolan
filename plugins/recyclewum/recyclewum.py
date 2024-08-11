@@ -55,7 +55,7 @@ async def recycle_wum(qq_id, name, wum_name, num):
     recycle_dict = {}
 
     for i in range(num):
-        coin = calculate_price(rarity, rarity_weight, recycle_sum_coin)
+        coin = calculate_price(rarity, rarity_weight, recycle_sum_coin, wum_name)
         gain_coins += coin
 
         if rarity == yi_rarity:
@@ -118,7 +118,7 @@ async def recycle_wum_rarity(qq_id, name, rarity):
         system_gain_coins = 0
 
         for i in range(num):
-            coin = calculate_price(rarity, rarity_weight, recycle_sum_coin)
+            coin = calculate_price(rarity, rarity_weight, recycle_sum_coin, wum_name)
             gain_coins += coin
 
             if rarity == yi_rarity:
@@ -193,7 +193,7 @@ async def recycle_wum_num(qq_id, name, command_type, command_num):
         system_gain_coins = 0
 
         for i in range(num):
-            coin = calculate_price(wum_rarity, rarity_weight, recycle_sum_coin)
+            coin = calculate_price(wum_rarity, rarity_weight, recycle_sum_coin, wum_name)
             gain_coins += coin
 
             if wum_rarity == yi_rarity:

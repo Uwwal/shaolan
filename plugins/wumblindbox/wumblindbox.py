@@ -8,7 +8,7 @@ from plugins.wumstoimage.wumstoimage import wums_to_image
 from utils.wum_utils import get_rarity, get_wum_rarity_weight, wum_dict_standard
 
 price_list = [5, 10]
-delta_value_list = [lambda: random.uniform(-2.2, 0.1), lambda: random.uniform(-10, 7)]
+delta_value_list = [lambda: random.uniform(-1.7, 0.3), lambda: random.uniform(-9, 8.5)]
 
 
 async def wum_blind_box(qq_id, name, type_index):
@@ -47,7 +47,7 @@ async def wum_blind_box(qq_id, name, type_index):
 
     if type_index == 1:
         r = random.randint(0, 100)
-        if r > 96:
+        if r > 95:
             skip_normal_blind_box = True
             wum = random.choice(wum_rarity_dict_list[dian_rarity])
             wum_dict.update({wum.name: 1})
@@ -61,6 +61,13 @@ async def wum_blind_box(qq_id, name, type_index):
             if blind_box_value > max_value:
                 break
 
+            if wum_name in wum_dict.keys():
+                wum_dict[wum_name] += 1
+            else:
+                wum_dict.update({wum_name: 1})
+
+            system_inventory.delete_wum(wum_name, 1, save=False)
+
             if rarity == dian_rarity:
                 for tem_wum_name, num in wum_dict.items():
                     system_inventory.add_wum(tem_wum_name, num, save=False)
@@ -72,19 +79,13 @@ async def wum_blind_box(qq_id, name, type_index):
 
                 break
             else:
-                t_price = calculate_price(rarity, rarity_weight, recycle_sum_coin)
+                t_price = calculate_price(rarity, rarity_weight, recycle_sum_coin, wum_name)
 
             blind_box_value += t_price
 
-            if wum_name in wum_dict.keys():
-                wum_dict[wum_name] += 1
-            else:
-                wum_dict.update({wum_name: 1})
 
-            system_inventory.delete_wum(wum_name, 1, save=False)
-
-            # print(
-            #     f"name: {wum_name}, rarity: {rarity}, price: {t_price}, value: {blind_box_value}, max_value: {max_value}")
+            print(
+                f"name: {wum_name}, rarity: {rarity}, price: {t_price}, value: {blind_box_value}, max_value: {max_value}")
 
     for wum_name, num in wum_dict.items():
         wum_inventory.add_wum(wum_name, num, save=False)
