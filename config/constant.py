@@ -177,6 +177,13 @@ wums_rarity_dict = {
     "小桶wum": 4,  # colorful odd
     "青蛙子wum": 4,  # colorful odd
     "wum燐": 6,  # blind box
+    "208wum": 6,  # blind box
+    "三wum": 5,  # yi
+    "无尽wum": 6,  # blind box
+    "普拉娜wum": 4,  # colorful odd
+    "奶wum": 6,  # blind box
+    "对wum": 2,  # odd
+    "wum耳猫": 2,  # odd
 }
 
 max_wum_name_len = 0
@@ -251,7 +258,7 @@ make_odd_tag_dict = {
     "无wum": [(OddTag.NAME_NONE, 3)],  # odd
     "无嘴wum": [(OddTag.NAME_NONE, 3)],
     "无目wum": [(OddTag.NAME_NONE, 3)],
-    "无耳wum": [(OddTag.NAME_NONE, 3)],  # odd
+    "无耳wum": [(OddTag.NAME_NONE, 3), (OddTag.NO_EARS, 5)],  # odd
     "无面wum": [(OddTag.NAME_NONE, 3), (OddTag.NO_FACE, 5)],  # odd
     "暗影wum": [(OddTag.BLACK_COLOR, 5)],  # colorful odd
     "极乐wum": [(OddTag.BLUE_COLOR, 2), (OddTag.EMOTION, 3)],  # colorful
@@ -286,28 +293,36 @@ make_odd_tag_dict = {
     "宿命wum": [(OddTag.PINK_COLOR, 5)],  # colorful odd
     "雅典娜wum": [(OddTag.BLUE_COLOR, 3), (OddTag.GREY_COLOR, 2)],  # blind box
     "娜典雅wum": [(OddTag.BLUE_COLOR, 3), (OddTag.GREY_COLOR, 2)],  # blind box
-    "wum什戴尔": [(OddTag.RED_COLOR, 5)],  # blind box
+    "wum什戴尔": [(OddTag.RED_COLOR, 5), (OddTag.MULTI_WUM, 5)],  # blind box
     "wum守": [(OddTag.PINK_COLOR, 5), (OddTag.FLOWER, 3)],  # blind box
     "史莱wum王": [(OddTag.YELLOW_COLOR, 4), (OddTag.RED_COLOR, 1)],  # blind box
     "puzzle wum": [(OddTag.PINK_COLOR, 3), [OddTag.BLUE_COLOR, 2], [OddTag.FLOWER, 5], (OddTag.VOCALOID, 5)],  # colorful
     "巨大wum": [],  # odd
-    "pou": [],  # odd
+    "pou": [(OddTag.NO_EARS, 5)],  # odd
     "mope wum": [(OddTag.BLUE_COLOR, 3), (OddTag.YELLOW_COLOR, 2), (OddTag.FLOWER, 5)],  # colorful
-    "无责任wum": [(OddTag.BLACK_COLOR, 5), (OddTag.YELLOW_COLOR, 1), (OddTag.FACE, 5), (OddTag.NAME_NONE, 3),
-                 (OddTag.VOCALOID, 5)],  # yi
+    "无责任wum": [(OddTag.BLACK_COLOR, 5), (OddTag.YELLOW_COLOR, 1), (OddTag.FACE, 5), (OddTag.NAME_NONE, 3), (OddTag.VOCALOID, 5)],  # yi
     "热异常wum": [(OddTag.RED_COLOR, 5), (OddTag.VOCALOID, 5)],  # yi
     "情绪wum": [(OddTag.BLUE_COLOR, 5), (OddTag.FLOWER, 5), (OddTag.EMOTION, 5)],  # yi
     "low-poly wum": [(OddTag.GREY_COLOR, 5)],  # colorful odd
-    "taffy wum": [(OddTag.PINK_COLOR, 5)],  # colorful odd
+    "taffy wum": [(OddTag.PINK_COLOR, 5), (OddTag.MULTI_WUM, 3)],  # colorful odd
     "wumiku": [(OddTag.GREEN_COLOR, 5), (OddTag.VOCALOID, 5)],  # colorful odd
     "坍缩wum": [(OddTag.BLACK_COLOR, 5), [OddTag.SINGLE_EYE, 5]],  # yi
     "赤蛮奇wum": [(OddTag.RED_COLOR, 5), (OddTag.BLUE_COLOR, 2), (OddTag.TOUHOU, 5)],  # blind box
     "惑星wum": [(OddTag.RED_COLOR, 5), (OddTag.VOCALOID, 5)],  # blind box
-    "kurarin wum": [(OddTag.PINK_COLOR, 5), (OddTag.VOCALOID, 5), (OddTag.MULTI_WUM, 5)],  # yi
+    "kurarin wum": [(OddTag.PINK_COLOR, 5), (OddTag.VOCALOID, 5), (OddTag.MULTI_WUM, 4)],  # yi
     "里表wum": [(OddTag.BLACK_COLOR, 3), (OddTag.GREY_COLOR, 2), (OddTag.VOCALOID, 5), (OddTag.MULTI_WUM, 2), (OddTag.NO_FACE, 5)],  # yi
     "小桶wum": [(OddTag.GREEN_COLOR, 2), (OddTag.BROWN_COLOR, 3), (OddTag.TOUHOU, 5)],  # colorful odd
     "青蛙子wum": [(OddTag.YELLOW_COLOR, 5), (OddTag.TOUHOU, 5)],  # colorful odd
-    "wum燐": [(OddTag.PINK_COLOR, 3), (OddTag.BLUE_COLOR, 2), (OddTag.TOUHOU, 5)],  # blind box
+    "wum燐": [(OddTag.PINK_COLOR, 3), (OddTag.BLUE_COLOR, 2), (OddTag.TOUHOU, 5), (OddTag.MULTI_WUM, 5)],  # blind box
+    "208wum": [(OddTag.YELLOW_COLOR, 3), (OddTag.BROWN_COLOR, 1), (OddTag.GREEN_COLOR, 1)],  # blind box
+    "三wum": [(OddTag.MULTI_WUM, 3), (OddTag.NO_EARS, 5)],  # yi
+    "无尽wum": [(OddTag.NAME_NONE, 3), (OddTag.RED_COLOR, 1), (OddTag.BLACK_COLOR, 1), (OddTag.YELLOW_COLOR, 1),
+                (OddTag.GREEN_COLOR, 1), (OddTag.BLUE_COLOR, 1), (OddTag.PURPLE_COLOR, 1), (OddTag.PINK_COLOR, 1),
+                (OddTag.GREEN_COLOR, 1), (OddTag.BROWN_COLOR, 1)],  # blind box
+    "普拉娜wum": [(OddTag.PINK_COLOR, 2), (OddTag.FLOWER, 3)],  # colorful odd
+    "奶wum": [(OddTag.NO_EARS, 5), (OddTag.YELLOW_COLOR, 5)],  # blind box
+    "对wum": [],  # odd
+    "wum耳猫": [(OddTag.MULTI_WUM, 3)],  # odd
 }
 
 # help start
